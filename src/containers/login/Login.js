@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import styles from "./loginStyles"
+import {Image} from "react-native"
 // import {login} from '../../actions/userActions';
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -58,20 +60,20 @@ class Login extends Component {
         return (
             <View style={styles.loginWrap}>
                 <View style={styles.loginFormWrap}>
-
-                    {/*<h3><img src={require('../../images/minifinder-tracktor-logo-login.png')} alt=""/></h3>*/}
+                    <Image source={{ uri: '../../images/minifinder-tracktor-logo-login.png'}}/>
                     {/*<form onSubmit={(e)=>this.login(e)}>*/}
                         {/*<label htmlFor="userName" className="login-form-label">*/}
-                            {/*<div className='login_bg'>*/}
-                                {/*<img src={require('../../images/user.svg')} alt=""/>*/}
-                            {/*</div>*/}
-
-                            {/*<input type="text" value={this.state.userName}*/}
-                                   {/*name="userName"*/}
-                                   {/*className="login-form-input"*/}
-                                   {/*onChange={(e) => this.handleInputChange(e)}*/}
-                                   {/*autoFocus={true}*/}
-                            {/*/>*/}
+                            <View style={styles.loginBg}>
+                                <Image source={{ uri: '../../images/user.svg'}} />
+                            </View>
+                            <TextInput
+                              value={this.state.topicText}
+                              onChangeText={(e) => this.handleInputChange(e)}
+                              onSubmitEditing={this.onSubmitTopicText}
+                              style={styles.loginFormInput}
+                              autoFocus={true}
+                              ref='topicTextInput'
+                            />
                         {/*</label>*/}
                         {/*<label htmlFor="password" className="login-form-label">*/}
                             {/*<div className='login_bg'>*/}

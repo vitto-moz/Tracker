@@ -9,6 +9,14 @@ const styles = StyleSheet.create({
     padding: '15% 0',
     textAlign: center
   },
-});
+  loginBg: {
+    backgroundСolor: '#282c31',
+    height: '45px',
+    width: '45px',
+    position: 'absolute',
+    left:0,
+    top:0,
+  },
+})
 
 export default styles
