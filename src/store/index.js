@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 
 const initialState = {};
 
-export default function index() {
+export default function configureStore() {
     let store;
 
     if (module.hot) {

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Provider } from "react-redux"
 import AppRouter from "./src/appRouter"
+import configureStore from "./src/store"
 import {
 StyleSheet,
 } from 'react-native';
 
 
-import store from "./src/store"
+let store = configureStore();
 
 export default class App extends Component<{}> {
   render() {
