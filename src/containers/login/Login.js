@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import styles from "./loginStyles"
-import {Button, CheckBox, Image, Text, TextInput, View} from "react-native"
+import {Button, Image, Text, TextInput, View} from "react-native"
+import { CheckBox } from 'react-native-elements'
 // import {login} from '../../actions/userActions';
 
 class Login extends Component {
@@ -23,12 +24,12 @@ class Login extends Component {
     //     }
     // }
 
-    handleInputChange(text) {
-        this.setState({userName: text});
+    handleInputChange(value, inputName) {
+        console.log('value ', value);
+        this.setState({[inputName]: value});
     }
 
-    login(e){
-        e.preventDefault();
+    login(){
         this.props.dispatch(login({user : this.state.userName, password: this.state.password}))
 
     }
@@ -58,51 +59,49 @@ class Login extends Component {
             <View style={styles.loginWrap}>
                 <View style={styles.loginFormWrap}>
                     <Image source={{ uri: '../../images/minifinder-tracktor-logo-login.png'}}/>
-                    {/*<form onSubmit={(e)=>this.login(e)}>*/}
-                        {/*<label htmlFor="userName" className="login-form-label">*/}
+                        <View style={styles.loginFormLabel}>
                             <View style={styles.loginBg}>
                                 <Image source={{ uri: '../../images/user.svg'}} />
                             </View>
                             <TextInput
                               value={this.state.userName}
-                              onChangeText={text => this.handleInputChange(text)}
-                              onSubmitEditing={this.onSubmitTopicText}
+                              onChangeText={text => this.handleInputChange(text, 'userName')}
                               style={styles.loginFormInput}
                               autoFocus={true}
                               ref='topicTextInput'
                             />
-                        {/*</label>*/}
-                        {/*<label htmlFor="password" className="login-form-label">*/}
-                            {/*<div className='login_bg'>*/}
-                                {/*<img src={require('../../images/password.svg')} alt=""/>*/}
-                            {/*</div>*/}
-                            {/*<input type="password"*/}
-                                   {/*name="password"*/}
-                                   {/*className="login-form-input"*/}
-                                   {/*value={this.state.password}*/}
-                                   {/*onChange={(e) => this.handleInputChange(e)}/>*/}
-                        {/*</label>*/}
-
-                        <Button style={styles.loginSubmitButton}
-                                onPress={onCreateTopicPress}
-                                title={this.props.user.loading ? 'Loading' : 'Login'}/>
-                        {/*{this.state.showError?<p>{this.state.showError}</p>:null}*/}
-                        {/*<div className='login-form-checkbox'>*/}
-                        <View style={styles.loginFormCheckbox}></View>
-                        <View>
-                            <CheckBox
-                              center
-                              title='rememberMe'
-                              checkedIcon='dot-circle-o'
-                              uncheckedIcon='circle-o'
-                              checked={this.state.rememberMe}
-                              onPress={(e) => this.setState((prevState, props) => ({rememberMe: !prevState.rememberMe}))}
+                        </View>
+                        <View style={styles.loginFormLabel}>
+                            <View style={styles.loginBg}>
+                                <Image source={{ uri: '../../images/password.svg'}} />
+                            </View>
+                            <TextInput
+                              value={this.state.password}
+                              onChangeText={text => this.handleInputChange(text, 'password')}
+                              style={styles.loginFormInput}
+                              autoFocus={true}
+                              ref='topicTextInput'
                             />
                         </View>
-                            <Text>Remember me</Text>
-                        {/*</div>*/}
 
-                    {/*</form>*/}
+                        <Button style={styles.loginSubmitButton}
+                                onPress={this.login}
+                                title={this.props.user.loading ? 'Loading' : 'Login'}/>
+
+                        {this.state.showError ? <Text>{this.state.showError}</Text> : null}
+
+                        <View style={styles.loginFormCheckbox}>
+                            <View>
+                                <CheckBox
+                                  center
+                                  title='Remember me'
+                                  checkedIcon='dot-circle-o'
+                                  uncheckedIcon='circle-o'
+                                  onPress={() => this.handleInputChange(!this.state.rememberMe, 'rememberMe')}
+                                  checked={this.state.rememberMe}
+                                />
+                            </View>
+                        </View>
                 </View>
             </View>
         );
