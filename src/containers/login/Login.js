@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import styles from "./loginStyles"
-import {Image, TextInput, View} from "react-native"
+import {Button, CheckBox, Image, Text, TextInput, View} from "react-native"
 // import {login} from '../../actions/userActions';
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,19 +23,16 @@ export default class Login extends Component {
     //     }
     // }
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
-        });
+    handleInputChange(text) {
+        this.setState({userName: text});
     }
+
     login(e){
         e.preventDefault();
         this.props.dispatch(login({user : this.state.userName, password: this.state.password}))
 
     }
+
     componentWillReceiveProps(nextProps) {
         if(nextProps.user.user){
             if(this.state.rememberMe){
@@ -67,8 +64,8 @@ export default class Login extends Component {
                                 <Image source={{ uri: '../../images/user.svg'}} />
                             </View>
                             <TextInput
-                              value={this.state.topicText}
-                              onChangeText={(e) => this.handleInputChange(e)}
+                              value={this.state.userName}
+                              onChangeText={text => this.handleInputChange(text)}
                               onSubmitEditing={this.onSubmitTopicText}
                               style={styles.loginFormInput}
                               autoFocus={true}
@@ -86,15 +83,23 @@ export default class Login extends Component {
                                    {/*onChange={(e) => this.handleInputChange(e)}/>*/}
                         {/*</label>*/}
 
-                        {/*<button type="submit" className="login-submit-button text-sd">{this.props.user.loading?'Loading' : 'Login'}</button>*/}
+                        <Button style={styles.loginSubmitButton}
+                                onPress={onCreateTopicPress}
+                                title={this.props.user.loading ? 'Loading' : 'Login'}/>
                         {/*{this.state.showError?<p>{this.state.showError}</p>:null}*/}
                         {/*<div className='login-form-checkbox'>*/}
-                            {/*<input type="checkbox" id="rememberMe" name="rememberMe" checked={this.state.rememberMe}*/}
-                                   {/*onChange={(e) => this.handleInputChange(e)}/>*/}
-                            {/*<label htmlFor="rememberMe">*/}
-
-                            {/*</label>*/}
-                            {/*<p>Remember me</p>*/}
+                        <View style={styles.loginFormCheckbox}></View>
+                        <View>
+                            <CheckBox
+                              center
+                              title='rememberMe'
+                              checkedIcon='dot-circle-o'
+                              uncheckedIcon='circle-o'
+                              checked={this.state.rememberMe}
+                              onPress={(e) => this.setState((prevState, props) => ({rememberMe: !prevState.rememberMe}))}
+                            />
+                        </View>
+                            <Text>Remember me</Text>
                         {/*</div>*/}
 
                     {/*</form>*/}
@@ -104,9 +109,9 @@ export default class Login extends Component {
     }
 }
 
-// function mapStateToProps(state) {
-//     const {user} = state;
-//     return { user}
-// }
-//
-// export default connect(mapStateToProps)(Login);
+function mapStateToProps(state) {
+    const {user} = state;
+    return { user}
+}
+
+export default connect(mapStateToProps)(Login);
