@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Provider } from "react-redux"
+import AppRouter from "./src/appRouter"
 import {
-  StyleSheet,
+StyleSheet,
 } from 'react-native';
 
 
@@ -10,7 +12,7 @@ export default class App extends Component<{}> {
   render() {
     return (
       <Provider store={store}>
-        <Router/>
+        <AppRouter/>
       </Provider>
     )
   }

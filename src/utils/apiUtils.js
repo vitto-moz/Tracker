@@ -1,4 +1,4 @@
-import "isomorphic-fetch";
+import fetch from 'cross-fetch';
 import {HOST} from "./config";
 
 export function checkStatus(response) {

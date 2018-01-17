@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import styles from "./loginStyles"
-import {Image} from "react-native"
+import {Image, TextInput, View} from "react-native"
 // import {login} from '../../actions/userActions';
 
-class Login extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,11 +17,11 @@ class Login extends Component {
         }
 
     }
-    componentWillMount(){
-        if(localStorage.getItem('token')){
-            this.props.history.push(`/devices`);
-        }
-    }
+    // componentWillMount(){
+    //     if(localStorage.getItem('token')){
+    //         this.props.history.push(`/devices`);
+    //     }
+    // }
 
     handleInputChange(event) {
         const target = event.target;
@@ -104,9 +104,9 @@ class Login extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    const {user} = state;
-    return { user}
-}
-
-export default connect(mapStateToProps)(Login);
+// function mapStateToProps(state) {
+//     const {user} = state;
+//     return { user}
+// }
+//
+// export default connect(mapStateToProps)(Login);
