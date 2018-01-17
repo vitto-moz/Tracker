@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware, combineReducers, compose} from "redux";
 import thunkMiddleware from "redux-thunk";
-// import user from '../reducers/userReducer';
-// import devices from '../reducers/devicesReducer';
+import user from '../reducers/userReducer';
+import devices from '../reducers/devicesReducer';
 import reduxReset from 'redux-reset'
 
 
