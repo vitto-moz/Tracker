@@ -1,22 +1,18 @@
 import {createStore, applyMiddleware, combineReducers, compose} from "redux";
 import thunkMiddleware from "redux-thunk";
-import logger from "redux-logger";
-import {routerReducer} from "react-router-redux";
-import user from '../reducers/userReducer';
-import devices from '../reducers/devicesReducer';
+// import user from '../reducers/userReducer';
+// import devices from '../reducers/devicesReducer';
 import reduxReset from 'redux-reset'
 
 
 const rootReducer = combineReducers({
     user,
     devices,
-    routing: routerReducer
-
 });
 
 const initialState = {};
 
-export default function configureStore() {
+export default function index() {
     let store;
 
     if (module.hot) {
@@ -24,7 +20,7 @@ export default function configureStore() {
             rootReducer,
             initialState,
             compose(
-                applyMiddleware(thunkMiddleware, logger,),
+                applyMiddleware(thunkMiddleware),
                 reduxReset(),
                 window.devToolsExtension ? window.devToolsExtension() : f => f
             )
