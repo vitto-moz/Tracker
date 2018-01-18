@@ -57,52 +57,53 @@ class Login extends Component {
     render() {
         return (
             <View style={styles.loginWrap}>
-                <View style={styles.loginFormWrap}>
-                    <Image source={{ uri: '../../images/minifinder-tracktor-logo-login.png'}}/>
-                        <View style={styles.loginFormLabel}>
-                            <View style={styles.loginBg}>
-                                <Image source={{ uri: '../../images/user.svg'}} />
-                            </View>
-                            <TextInput
-                              value={this.state.userName}
-                              onChangeText={text => this.handleInputChange(text, 'userName')}
-                              style={styles.loginFormInput}
-                              autoFocus={true}
-                              ref='topicTextInput'
-                            />
-                        </View>
-                        <View style={styles.loginFormLabel}>
-                            <View style={styles.loginBg}>
-                                <Image source={{ uri: '../../images/password.svg'}} />
-                            </View>
-                            <TextInput
-                              value={this.state.password}
-                              onChangeText={text => this.handleInputChange(text, 'password')}
-                              style={styles.loginFormInput}
-                              autoFocus={true}
-                              ref='topicTextInput'
-                            />
-                        </View>
-
-                        <Button style={styles.loginSubmitButton}
-                                onPress={this.login}
-                                title={this.props.user.loading ? 'Loading' : 'Login'}/>
-
-                        {this.state.showError ? <Text>{this.state.showError}</Text> : null}
-
-                        <View style={styles.loginFormCheckbox}>
-                            <View>
-                                <CheckBox
-                                  center
-                                  title='Remember me'
-                                  checkedIcon='dot-circle-o'
-                                  uncheckedIcon='circle-o'
-                                  onPress={() => this.handleInputChange(!this.state.rememberMe, 'rememberMe')}
-                                  checked={this.state.rememberMe}
+                <Image style={styles.backgroundImage}
+                    source={require('../../images/bg_home.png')}/>
+                    <View style={styles.loginFormWrap}>
+                        <Image style={styles.logoImage}
+                               source={require('../../images/minifinder-tracktor-logo-login.png')}/>
+                            <View style={styles.loginFormLabel}>
+                                <View style={styles.loginBg}>
+                                    <Image source={{ uri: '../../images/user.svg'}} />
+                                </View>
+                                <TextInput
+                                  value={this.state.userName}
+                                  onChangeText={text => this.handleInputChange(text, 'userName')}
+                                  style={styles.loginFormInput}
+                                  ref='topicTextInput'
                                 />
                             </View>
-                        </View>
-                </View>
+                            <View style={styles.loginFormLabel}>
+                                <View style={styles.loginBg}>
+                                    <Image source={{ uri: '../../images/password.svg'}} />
+                                </View>
+                                <TextInput
+                                  value={this.state.password}
+                                  onChangeText={text => this.handleInputChange(text, 'password')}
+                                  style={styles.loginFormInput}
+                                  ref='topicTextInput'
+                                />
+                            </View>
+
+                            <Button style={styles.loginSubmitButton}
+                                    onPress={this.login}
+                                    title={this.props.user.loading ? 'Loading' : 'Login'}/>
+
+                            {this.state.showError ? <Text>{this.state.showError}</Text> : null}
+
+                            <View style={styles.loginFormCheckbox}>
+                                <View>
+                                    <CheckBox
+                                      center
+                                      title='Remember me'
+                                      checkedIcon='dot-circle-o'
+                                      uncheckedIcon='circle-o'
+                                      onPress={() => this.handleInputChange(!this.state.rememberMe, 'rememberMe')}
+                                      checked={this.state.rememberMe}
+                                    />
+                                </View>
+                            </View>
+                    </View>
             </View>
         );
     }
