@@ -6,6 +6,8 @@ const styles = StyleSheet.create({
     // remove width and height to override fixed static size
     width: null,
     height: null,
+    alignItems: 'center',
+    justifyContent: 'flex-start'
   },
   backgroundImage: {
     flex: 1,
@@ -16,9 +18,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loginFormWrap: {
-    // maxWidth: '500px',
-    // margin: '0% auto',
-    // padding: '15% 0',
     justifyContent: 'center',
     alignItems: 'center',
     paddingRight: 20,
@@ -26,7 +25,6 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     resizeMode: 'contain',
-    flex: 1,
     width: 300,
     paddingTop: 30,
     position: 'relative',
@@ -63,13 +61,32 @@ const styles = StyleSheet.create({
     backgroundColor: '#99d5eb33',
     opacity: 0.9,
     flex: 1,
-    marginRight: 10
+  },
+  loginFormActionsWrap: {
+    alignItems: 'flex-end',
+    width: '100%',
+    height: 45,
+    maxWidth: 250,
+    marginTop: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative'
   },
   loginSubmitButton: {
     backgroundColor: '#00aeef',
     height: 45,
-    width: 300,
     marginTop: 10,
+    marginRight: 0,
+    width: '100%',
+  },
+  checkboxContainerStyle: {
+    backgroundColor: 'transparent',
+    height: 45,
+    marginTop: 10,
+    marginRight: 0,
+  },
+  checkboxTextStyle: {
+    color: 'white'
   },
 })
 

@@ -82,16 +82,7 @@ class Login extends Component {
                           ref='topicTextInput'
                         />
                     </View>
-
-                    <Button containerViewStyle={styles.loginSubmitButton}
-                            backgroundColor='#00aeef'
-                            onPress={this.login}
-                            title={this.props.user.loading ? 'Loading' : 'Login'}/>
-
-                    {this.state.showError ? <Text>{this.state.showError}</Text> : null}
-
-                    <View style={styles.loginFormCheckbox}>
-                        <View>
+                    <View style={styles.loginFormActionsWrap}>
                             <CheckBox
                               center
                               title='Remember me'
@@ -99,8 +90,16 @@ class Login extends Component {
                               uncheckedIcon='circle-o'
                               onPress={() => this.handleInputChange(!this.state.rememberMe, 'rememberMe')}
                               checked={this.state.rememberMe}
+                              containerStyle={styles.checkboxContainerStyle}
+                              textStyle={styles.checkboxTextStyle}
                             />
-                        </View>
+
+                            <Button containerViewStyle={styles.loginSubmitButton}
+                                    backgroundColor='#00aeef'
+                                    onPress={this.login}
+                                    title={this.props.user.loading ? 'Loading' : 'Login'}/>
+
+                          {this.state.showError ? <Text>{this.state.showError}</Text> : null}
                     </View>
                 </View>
             </View>
