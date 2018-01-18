@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   loginFormWrap: {
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     paddingRight: 20,
     paddingLeft: 20,
   },
@@ -63,12 +63,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   loginFormActionsWrap: {
-    alignItems: 'flex-end',
-    width: '100%',
-    height: 45,
-    maxWidth: 250,
-    marginTop: 10,
     display: 'flex',
+    alignItems: 'flex-end',
+    height: 45,
+    marginTop: 10,
     flexDirection: 'column',
     position: 'relative'
   },
@@ -76,14 +74,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#00aeef',
     height: 45,
     marginTop: 10,
+    width: 245,
     marginRight: 0,
-    width: '100%',
+    marginLeft: 0,
   },
   checkboxContainerStyle: {
     backgroundColor: 'transparent',
     height: 45,
     marginTop: 10,
     marginRight: 0,
+    width: 245,
   },
   checkboxTextStyle: {
     color: 'white'

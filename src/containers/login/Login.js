@@ -83,6 +83,7 @@ class Login extends Component {
                         />
                     </View>
                     <View style={styles.loginFormActionsWrap}>
+
                             <CheckBox
                               center
                               title='Remember me'
