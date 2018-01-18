@@ -73,9 +73,8 @@ class Login extends Component {
                                 />
                             </View>
                             <View style={styles.loginFormInputWrap}>
-                                <View style={styles.loginBg}>
-                                    <Image source={{ uri: '../../images/password.svg'}} />
-                                </View>
+                                <Image  style={styles.inputIcon}
+                                        source={require('../../images/password.png')} />
                                 <TextInput
                                   value={this.state.password}
                                   onChangeText={text => this.handleInputChange(text, 'password')}
