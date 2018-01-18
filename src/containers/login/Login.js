@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import styles from "./loginStyles"
-import {Button, Image, Text, TextInput, View} from "react-native"
-import { CheckBox } from 'react-native-elements'
+import {Image, Text, TextInput, View} from "react-native"
+import { CheckBox, Button } from 'react-native-elements'
 // import {login} from '../../actions/userActions';
 
 class Login extends Component {
@@ -63,9 +63,8 @@ class Login extends Component {
                         <Image style={styles.logoImage}
                                source={require('../../images/minifinder-tracktor-logo-login.png')}/>
                             <View style={styles.loginFormInputWrap}>
-                                <View style={styles.loginBg}>
-                                    <Image source={{ uri: '../../images/user.svg'}} />
-                                </View>
+                                <Image style={styles.inputIcon}
+                                       source={require('../../images/user.png')} />
                                 <TextInput
                                   value={this.state.userName}
                                   onChangeText={text => this.handleInputChange(text, 'userName')}
@@ -85,7 +84,8 @@ class Login extends Component {
                                 />
                             </View>
 
-                            <Button style={styles.loginSubmitButton}
+                            <Button containerViewStyle={styles.loginSubmitButton}
+                                    backgroundColor='#00aeef'
                                     onPress={this.login}
                                     title={this.props.user.loading ? 'Loading' : 'Login'}/>
 

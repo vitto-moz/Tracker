@@ -33,14 +33,6 @@ const styles = StyleSheet.create({
 
     // textAlign: 'center'
   },
-  loginBg: {
-    // backgroundСolor: '#282c31',
-    // height: '45px',
-    // width: '45px',
-    // position: 'absolute',
-    // left:0,
-    // top:0,
-  },
   loginFormCheckbox: {
     // backgroundСolor: '#282c31',
     // height: '45px',
@@ -50,14 +42,32 @@ const styles = StyleSheet.create({
     // top:0,
   },
   loginFormInputWrap: {
-    backgroundColor: '#282c31',
-    opacity: 0.5,
     height: 45,
     width: 300,
     marginTop: 10,
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  inputIcon: {
+    // backgroundСolor: '#282c31',
+    height: 45,
+    width: 45,
+    marginRight: 10,
     // position: 'absolute',
     // left:0,
     // top:0,
+  },
+  loginFormInput: {
+    backgroundColor: '#99d5eb33',
+    opacity: 0.9,
+    flex: 1,
+    marginRight: 10
+  },
+  loginSubmitButton: {
+    backgroundColor: '#00aeef',
+    height: 45,
+    width: 300,
+    marginTop: 10,
   },
 })
 
