@@ -62,7 +62,7 @@ class Login extends Component {
                     <View style={styles.loginFormWrap}>
                         <Image style={styles.logoImage}
                                source={require('../../images/minifinder-tracktor-logo-login.png')}/>
-                            <View style={styles.loginFormLabel}>
+                            <View style={styles.loginFormInputWrap}>
                                 <View style={styles.loginBg}>
                                     <Image source={{ uri: '../../images/user.svg'}} />
                                 </View>
@@ -73,7 +73,7 @@ class Login extends Component {
                                   ref='topicTextInput'
                                 />
                             </View>
-                            <View style={styles.loginFormLabel}>
+                            <View style={styles.loginFormInputWrap}>
                                 <View style={styles.loginBg}>
                                     <Image source={{ uri: '../../images/password.svg'}} />
                                 </View>

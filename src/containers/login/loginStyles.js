@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     position: 'relative',
     marginTop: 20,
+    marginBottom: 10,
 
     // textAlign: 'center'
   },
@@ -48,10 +49,12 @@ const styles = StyleSheet.create({
     // left:0,
     // top:0,
   },
-  loginFormLabel: {
-    // backgroundСolor: '#282c31',
-    // height: '45px',
-    // width: '45px',
+  loginFormInputWrap: {
+    backgroundColor: '#282c31',
+    opacity: 0.5,
+    height: 45,
+    width: 300,
+    marginTop: 10,
     // position: 'absolute',
     // left:0,
     // top:0,
