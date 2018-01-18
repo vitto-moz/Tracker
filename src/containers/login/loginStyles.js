@@ -20,7 +20,9 @@ const styles = StyleSheet.create({
     // margin: '0% auto',
     // padding: '15% 0',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingRight: 20,
+    paddingLeft: 20,
   },
   logoImage: {
     resizeMode: 'contain',
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
   },
   loginFormInputWrap: {
     height: 45,
-    width: 300,
+    maxWidth: 300,
     marginTop: 10,
     display: 'flex',
     flexDirection: 'row'
