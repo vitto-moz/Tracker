@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import Header from "../../components/deviceList/header";
+import Header from "../../components/deviceList/header";
 // import Bottom from "../../components/deviceList/bottom";
 // import DeviceList from "../../components/deviceList/deviceList";
 // import MapComponent from "../../components/deviceList/map";
@@ -208,7 +208,7 @@ class DeviceListPage extends Component {
 
         return (
             <View className='devicePageWrapper'>
-                {/*<Header toggleList={() => this.toggleList()} logout={() => this.logout()}/>*/}
+                <Header toggleList={() => this.toggleList()} logout={() => this.logout()}/>
                 {/*<div className="device-main">*/}
                     {/*<DeviceList changeMapDirection={(id) => {*/}
                         {/*this.changeMapDirection(id)*/}
