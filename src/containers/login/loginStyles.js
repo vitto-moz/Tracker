@@ -11,10 +11,8 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
+    // resizeMode: 'cover',
     position: 'absolute',
-    width: '100%',
-    height: '100%',
     justifyContent: 'center',
   },
   loginFormWrap: {
@@ -30,16 +28,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     marginTop: 20,
     marginBottom: 10,
-
-    // textAlign: 'center'
-  },
-  loginFormCheckbox: {
-    // backgroundСolor: '#282c31',
-    // height: '45px',
-    // width: '45px',
-    // position: 'absolute',
-    // left:0,
-    // top:0,
   },
   loginFormInputWrap: {
     height: 45,
@@ -49,16 +37,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   inputIcon: {
-    // backgroundСolor: '#282c31',
     height: 45,
     width: 45,
     marginRight: 10,
-    // position: 'absolute',
-    // left:0,
-    // top:0,
   },
   loginFormInput: {
     backgroundColor: '#99d5eb33',
+    color: 'white',
     opacity: 0.9,
     flex: 1,
   },
@@ -77,6 +62,7 @@ const styles = StyleSheet.create({
     width: 245,
     marginRight: 0,
     marginLeft: 0,
+    borderRadius: 4
   },
   checkboxContainerStyle: {
     backgroundColor: 'transparent',
@@ -84,6 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 0,
     width: 245,
+    borderRadius: 4
   },
   checkboxTextStyle: {
     color: 'white'

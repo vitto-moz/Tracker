@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux";
+import React, { Component } from 'react';
+import { connect } from "react-redux";
 import styles from "./loginStyles"
-import {Image, Text, TextInput, View} from "react-native"
+import { Image, Text, TextInput, View } from "react-native"
 import { CheckBox, Button } from 'react-native-elements'
-// import {login} from '../../actions/userActions';
+import { login } from '../../actions/userActions';
 
 class Login extends Component {
     constructor(props) {
@@ -25,13 +25,11 @@ class Login extends Component {
     // }
 
     handleInputChange(value, inputName) {
-        console.log('value ', value);
         this.setState({[inputName]: value});
     }
 
-    login(){
+    tryLogin = () => {
         this.props.dispatch(login({user : this.state.userName, password: this.state.password}))
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -39,7 +37,7 @@ class Login extends Component {
             if(this.state.rememberMe){
                 localStorage.setItem('token', nextProps.user.ssid);
             }
-            this.props.history.push(`/devices`);
+            // this.props.history.push(`/devices`);
         }
         if(nextProps.user.error){
             this.setState({
@@ -97,7 +95,7 @@ class Login extends Component {
 
                             <Button containerViewStyle={styles.loginSubmitButton}
                                     backgroundColor='#00aeef'
-                                    onPress={this.login}
+                                    onPress={this.tryLogin}
                                     title={this.props.user.loading ? 'Loading' : 'Login'}/>
 
                           {this.state.showError ? <Text>{this.state.showError}</Text> : null}

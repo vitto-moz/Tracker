@@ -1,1 +1,1 @@
-export const HOST = "";
+export const HOST = "http://sdk.tracktor.se/";
