@@ -4,6 +4,8 @@ import styles from "./loginStyles"
 import { Image, Text, TextInput, View } from "react-native"
 import { CheckBox, Button } from 'react-native-elements'
 import { login } from '../../actions/userActions';
+import { Actions } from "react-native-router-flux";
+import { AsyncStorage } from "react-native"
 
 class Login extends Component {
     constructor(props) {
@@ -18,11 +20,11 @@ class Login extends Component {
         }
 
     }
-    // componentWillMount(){
-    //     if(localStorage.getItem('token')){
-    //         this.props.history.push(`/devices`);
-    //     }
-    // }
+    componentWillMount(){
+        if(AsyncStorage.getItem('token')){
+            Actions.devices()
+        }
+    }
 
     handleInputChange(value, inputName) {
         this.setState({[inputName]: value});
@@ -35,9 +37,9 @@ class Login extends Component {
     componentWillReceiveProps(nextProps) {
         if(nextProps.user.user){
             if(this.state.rememberMe){
-                localStorage.setItem('token', nextProps.user.ssid);
+                AsyncStorage.setItem('token', nextProps.user.ssid);
             }
-            // this.props.history.push(`/devices`);
+            Actions.devices()
         }
         if(nextProps.user.error){
             this.setState({

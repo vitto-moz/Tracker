@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
-import Header from "../../components/deviceList/header";
-import Bottom from "../../components/deviceList/bottom";
-import DeviceList from "../../components/deviceList/deviceList";
-import MapComponent from "../../components/deviceList/map";
-import {connect} from "react-redux";
-import {getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo} from '../../actions/deviceActions';
-import Modal from "../../components/deviceList/Modal";
-import ModalGeo from "../../components/deviceList/ModalGeo";
+import React, { Component } from 'react';
+// import Header from "../../components/deviceList/header";
+// import Bottom from "../../components/deviceList/bottom";
+// import DeviceList from "../../components/deviceList/deviceList";
+// import MapComponent from "../../components/deviceList/map";
+import { connect } from "react-redux";
+import { getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo } from '../../actions/deviceActions';
+import { AsyncStorage, View } from "react-native"
+// import Modal from "../../components/deviceList/Modal";
+// import ModalGeo from "../../components/deviceList/ModalGeo";
 
 class DeviceListPage extends Component {
 
@@ -15,20 +16,26 @@ class DeviceListPage extends Component {
         this.state = {
             showList: true,
             items: [],
-            ssid: localStorage.getItem('token') ? localStorage.getItem('token') : this.props.ssid,
             mapType: 'roadmap',
             showModal: false,
             showDrawModal: false,
             activeItemId: null,
             drawing: false,
-            polygons: JSON.parse(localStorage.getItem('polygons')) || [],
             edit: false
         }
     }
 
+    setAsyncInitialState = async () => {
+      const sPolygons = await AsyncStorage.getItem('polygons')
+      const polygons = JSON.parse(sPolygons) || []
+      const token = await AsyncStorage.getItem('token')
+      this.setState({polygons, ssid: token})
+    }
+
     componentWillMount() {
+        this.setAsyncInitialState()
         if (!this.state.ssid) {
-            this.props.history.push('/');
+            // this.props.history.push('/');
         }
         if (this.props.devices.loaded) {
             this.setState({items: this.props.devices.items});
@@ -59,8 +66,8 @@ class DeviceListPage extends Component {
             }
         }
         if (nextProps.devices.redirect) {
-            localStorage.removeItem('token');
-            this.props.history.push(`/`);
+            AsyncStorage.removeItem('token');
+            // this.props.history.push(`/`);
         }
     }
 
@@ -96,8 +103,8 @@ class DeviceListPage extends Component {
 
     logout() {
         this.props.dispatch({type: 'RESET'});
-        localStorage.removeItem('token');
-        this.props.history.push(`/`);
+        AsyncStorage.removeItem('token');
+        // this.props.history.push(`/`);
     }
 
     showItemHistory(id, value) {
@@ -142,7 +149,7 @@ class DeviceListPage extends Component {
             path: path
         };
         polygons.push(newPolygon);
-        localStorage.setItem('polygons', JSON.stringify(polygons));
+        AsyncStorage.setItem('polygons', JSON.stringify(polygons));
         this.setState({
             polygons,
             drawing: false
@@ -169,7 +176,7 @@ class DeviceListPage extends Component {
         })
         if (indexOfPolygon !== -1) {
             polygons.splice(indexOfPolygon, 1);
-            localStorage.setItem('polygons', JSON.stringify(polygons));
+            AsyncStorage.setItem('polygons', JSON.stringify(polygons));
             this.setState({
                 polygons,
                 showDrawModal: false
@@ -190,7 +197,7 @@ class DeviceListPage extends Component {
             return item.id === this.state.activeItemId;
         });
         polygons[indexOfEditable].path = path;
-        localStorage.setItem('polygons', JSON.stringify(polygons));
+        AsyncStorage.setItem('polygons', JSON.stringify(polygons));
         this.setState({
             edit: false,
             polygons
@@ -200,45 +207,45 @@ class DeviceListPage extends Component {
     render() {
 
         return (
-            <div className='device-page-wrapper'>
-                <Header toggleList={() => this.toggleList()} logout={() => this.logout()}/>
-                <div className="device-main">
-                    <DeviceList changeMapDirection={(id) => {
-                        this.changeMapDirection(id)
-                    }}
-                                loaded={this.props.devices.loaded}
-                                items={this.props.devices.items}
-                                showList={this.state.showList}
-                                activeItemId={this.state.activeItemId}
-                                showHistory={(id, value) => this.showItemHistory(id, value)}/>
-                    <MapComponent
-                        edit={this.state.edit}
-                        makeActive={this.makeActive.bind(this)}
-                        polygons={this.state.polygons}
-                        savePolygon={(polygon) => this.addPolygon(polygon)}
-                        finishDraw={() => this.finishDraw()}
-                        drawing={this.state.drawing}
-                        activeItemId={this.state.activeItemId}
-                        coordinates={this.props.devices.coordinates}
-                        geoJSON={this.props.devices.geoJSON}
-                        items={this.getActiveItems()}
-                        ref={(map) => {
-                            this.map = map;
-                        }}
-                        mapType={this.state.mapType}
-                        finishEdit={this.finishEdit.bind(this)}
-                    />
-                </div>
-                <Bottom showModal={() => this.showModal()} showDrawModal={() => this.showDrawModal()}/>
-                <Modal mapType={this.state.mapType} changeMapType={(type) => {
-                    this.changeMapType(type)
-                }} showModal={this.state.showModal}/>
-                <ModalGeo editPolygon={() => {
-                    this.editPolygon()
-                }} deletePolygon={this.deletePolygon.bind(this)} isPolygonPresent={this.isPolygonPresent()}
-                          showModal={this.state.showDrawModal} createPolygon={() => this.createPolygon()}
-                          closeDrawModal={() => this.closeDrawModal()}/>
-            </div>
+            <View className='devicePageWrapper'>
+                {/*<Header toggleList={() => this.toggleList()} logout={() => this.logout()}/>*/}
+                {/*<div className="device-main">*/}
+                    {/*<DeviceList changeMapDirection={(id) => {*/}
+                        {/*this.changeMapDirection(id)*/}
+                    {/*}}*/}
+                                {/*loaded={this.props.devices.loaded}*/}
+                                {/*items={this.props.devices.items}*/}
+                                {/*showList={this.state.showList}*/}
+                                {/*activeItemId={this.state.activeItemId}*/}
+                                {/*showHistory={(id, value) => this.showItemHistory(id, value)}/>*/}
+                    {/*<MapComponent*/}
+                        {/*edit={this.state.edit}*/}
+                        {/*makeActive={this.makeActive.bind(this)}*/}
+                        {/*polygons={this.state.polygons}*/}
+                        {/*savePolygon={(polygon) => this.addPolygon(polygon)}*/}
+                        {/*finishDraw={() => this.finishDraw()}*/}
+                        {/*drawing={this.state.drawing}*/}
+                        {/*activeItemId={this.state.activeItemId}*/}
+                        {/*coordinates={this.props.devices.coordinates}*/}
+                        {/*geoJSON={this.props.devices.geoJSON}*/}
+                        {/*items={this.getActiveItems()}*/}
+                        {/*ref={(map) => {*/}
+                            {/*this.map = map;*/}
+                        {/*}}*/}
+                        {/*mapType={this.state.mapType}*/}
+                        {/*finishEdit={this.finishEdit.bind(this)}*/}
+                    {/*/>*/}
+                {/*</div>*/}
+                {/*<Bottom showModal={() => this.showModal()} showDrawModal={() => this.showDrawModal()}/>*/}
+                {/*<Modal mapType={this.state.mapType} changeMapType={(type) => {*/}
+                    {/*this.changeMapType(type)*/}
+                {/*}} showModal={this.state.showModal}/>*/}
+                {/*<ModalGeo editPolygon={() => {*/}
+                    {/*this.editPolygon()*/}
+                {/*}} deletePolygon={this.deletePolygon.bind(this)} isPolygonPresent={this.isPolygonPresent()}*/}
+                          {/*showModal={this.state.showDrawModal} createPolygon={() => this.createPolygon()}*/}
+                          {/*closeDrawModal={() => this.closeDrawModal()}/>*/}
+            </View>
         );
     }
 }
