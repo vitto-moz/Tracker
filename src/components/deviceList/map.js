@@ -1,8 +1,8 @@
 import React, {PureComponent} from "react"
 import { compose, withProps } from "recompose"
-import {withScriptjs, withGoogleMap, GoogleMap, Marker, Polyline , Polygon} from "react-google-maps";
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polyline , Polygon } from "react-google-maps";
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer";
-import {InfoBox} from 'react-google-maps/lib/components/addons/InfoBox';
+import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
 import moment from 'moment';
 import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
 
