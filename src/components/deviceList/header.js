@@ -9,10 +9,10 @@ const HeaderWrap = ({toggleList, logout})=> {
         return (
           <Header
             outerContainerStyles={{backgroundColor: 'black'}}
-            leftComponent={{ icon: 'menu', color: '#fff' }}
+            leftComponent={{ icon: 'menu', color: '#fff', onPress: toggleList }}
             centerComponent={<Image source={require("../../images/minifinder-tracktor-logo-login.png")}
                                     style={{width: 220, height: 30, top: 2, resizeMode: 'contain'}}/>}
-            rightComponent={{ icon: 'exit-to-app', color: '#fff' }}
+            rightComponent={{ icon: 'exit-to-app', color: '#fff', onPress: logout  }}
           />
 
             // <View className="bar-wrapper top">

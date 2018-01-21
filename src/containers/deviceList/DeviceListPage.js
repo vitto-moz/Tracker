@@ -6,6 +6,7 @@ import Header from "../../components/deviceList/header";
 import { connect } from "react-redux";
 import { getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo } from '../../actions/deviceActions';
 import { AsyncStorage, View } from "react-native"
+import {Actions} from "react-native-router-flux"
 // import Modal from "../../components/deviceList/Modal";
 // import ModalGeo from "../../components/deviceList/ModalGeo";
 
@@ -58,6 +59,7 @@ class DeviceListPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
         if (nextProps.devices.loaded && !nextProps.devices.gettingInfo) {
             this.setState({items: nextProps.devices.items});
             if (!nextProps.devices.gettingInfo) {
@@ -66,7 +68,7 @@ class DeviceListPage extends Component {
             }
         }
         if (nextProps.devices.redirect) {
-            AsyncStorage.removeItem('token');
+            // AsyncStorage.removeItem('token');
             // this.props.history.push(`/`);
         }
     }
@@ -103,8 +105,7 @@ class DeviceListPage extends Component {
 
     logout() {
         this.props.dispatch({type: 'RESET'});
-        AsyncStorage.removeItem('token');
-        // this.props.history.push(`/`);
+        AsyncStorage.removeItem('token', () => Actions.login())
     }
 
     showItemHistory(id, value) {

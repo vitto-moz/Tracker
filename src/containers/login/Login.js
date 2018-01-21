@@ -18,12 +18,12 @@ class Login extends Component {
             showError : null
 
         }
-
     }
+
     componentWillMount(){
-        if(AsyncStorage.getItem('token')){
-            Actions.devices()
-        }
+      AsyncStorage.getItem('token', ( err, token ) => {
+        if(token) Actions.devices()
+      }).catch(err => console.log('err ', err))
     }
 
     handleInputChange(value, inputName) {
@@ -37,9 +37,9 @@ class Login extends Component {
     componentWillReceiveProps(nextProps) {
         if(nextProps.user.user){
             if(this.state.rememberMe){
-                AsyncStorage.setItem('token', nextProps.user.ssid);
-            }
-            Actions.devices()
+                AsyncStorage.setItem('token', nextProps.user.ssid, () => Actions.devices())
+                  .catch(err => console.log('err ', err))
+            } else Actions.devices()
         }
         if(nextProps.user.error){
             this.setState({
