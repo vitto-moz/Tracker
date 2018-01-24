@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {Text, View} from "react-native"
 // import { Scrollbars } from 'react-custom-scrollbars';
 import styles from './deviceListStyles';
+import DeviceItem from "../DeviceItem/index"
 
 
 class DeviceList extends Component {
@@ -28,17 +29,18 @@ class DeviceList extends Component {
 
     render() {
         let items =[];
-        if(this.props.loaded){
+      console.log('this.props.loaded ', this.props.loaded);
+      if(this.props.loaded){
             items = this.props.items.map((item, index) => {
-                // return <DeviceItem item={item}
-                //                    key={item.id}
-                //                    changeMap={()=> this.props.changeMapDirection(item.id)}
-                //                    active={item.id === this.props.activeItemId}
-                //                    changeTrigger={()=>this.changeTrigger(item.id)}
-                //                    openTrigger={this.state.openTrigger}
-                //                    showHistory={(value)=>this.props.showHistory(item.id, value)}
+                return <DeviceItem item={item}
+                                   key={item.id}
+                                   changeMap={()=> this.props.changeMapDirection(item.id)}
+                                   active={item.id === this.props.activeItemId}
+                                   changeTrigger={()=>this.changeTrigger(item.id)}
+                                   openTrigger={this.state.openTrigger}
+                                   showHistory={(value)=>this.props.showHistory(item.id, value)}
 
-                // />
+                />
             });
         }
         const myScrollbar = {
