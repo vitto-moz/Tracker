@@ -6,14 +6,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between'
   },
-  batterycon: {
-    width: 50,
-    height: 50,
-    resizeMode: 'contain'
-  },
   batteryIcon: {
     width: 30,
     height: 20,
+    resizeMode: 'contain',
+    marginRight: 5
+  },
+  activenessIcon: {
+    width: 70,
+    height: 70,
     resizeMode: 'contain',
     marginRight: 5
   },
@@ -21,7 +22,9 @@ const styles = StyleSheet.create({
     padding: 10,
     display: 'flex',
     alignItems: 'flex-start',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderColor: '#50585b'
   },
   deviceNamepassive: {
     color: '#d2ac14',
@@ -32,8 +35,11 @@ const styles = StyleSheet.create({
   deviceNameactive: {
     color: '#90be4d',
   },
-  timeAgo: {
+  timeAgoWrap: {
     color: '#a5a5a5',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   batteryLevel: {
     color: '#a5a5a5',

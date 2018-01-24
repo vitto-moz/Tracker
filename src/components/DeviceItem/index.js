@@ -69,13 +69,13 @@ function getGSMIcon(detail) {
             let gsmSignal = detail['pos']['p']['gsm_csq'];
             if (detail['hw'] === 646) {
                 let level = getLevel(gsmSignal, [10, 14, 17, 20, 999]);
-                return <Image style={styles.batterycon} source={images[`signal_${level}`]} />
+                return <Image style={styles.batteryIcon} source={images[`signal_${level}`]} />
             } else {
                 let level = getLevel(gsmSignal, [6, 9, 12, 20, 999]);
-                return <Image style={styles.batterycon} source={images[`signal_${level}`]} />
+                return <Image style={styles.batteryIcon} source={images[`signal_${level}`]} />
             }
         }
-        return <Image style={styles.batterycon} source={require("../../images/signal_offline.png")} />
+        return <Image style={styles.batteryIcon} source={require("../../images/signal_offline.png")} />
     }
 }
 
@@ -86,9 +86,9 @@ function getGPSIcon(detail) {
         let status = getDeviceStatus(detail);
         let gpsSignal = detail['pos']['p']['sats_in_view'];
         if (status !== "offline" || gpsSignal < 2) {
-            return <Image style={styles.batterycon} source={require("../../images/satellite.png")} />
+            return <Image style={styles.batteryIcon} source={require("../../images/satellite.png")} />
         } else {
-          return <Image style={styles.batterycon} source={require("../../images/satellite_offline.png")} />
+          return <Image style={styles.batteryIcon} source={require("../../images/satellite_offline.png")} />
         }
     }
     return null
@@ -99,12 +99,12 @@ function getSpeedIcon(detail) {
     let speed = detail['pos']['s'];
     if (status !== "offline") {
         return speed > 0 ?
-          <Image style={styles.batterycon} source={require("../../images/arrow-right.png")} /> :
-          <Image style={styles.batterycon} source={require("../../images/arrow-minus.png")} />;
+          <Image style={styles.batteryIcon} source={require("../../images/arrow-right.png")} /> :
+          <Image style={styles.batteryIcon} source={require("../../images/arrow-minus.png")} />;
     } else {
         return speed > 0 ?
-          <Image style={styles.batterycon} source={require("../../images/arrow-right-gray.png")} /> :
-          <Image style={styles.batterycon} source={require("../../images/arrow-minus-gray.png")} />;
+          <Image style={styles.batteryIcon} source={require("../../images/arrow-right-gray.png")} /> :
+          <Image style={styles.batteryIcon} source={require("../../images/arrow-minus-gray.png")} />;
     }
 }
 
@@ -112,9 +112,9 @@ const DeviceStatuses = ({detail}) => {
     if (detail) {
         return <View style={styles.deviceStatusWrap}>
                   {getDeviceBattery(detail)}
-                  {/*{getGPSIcon(detail)} */}
-                  {/*{getGSMIcon(detail)}*/}
-                  {/*{getSpeedIcon(detail)}*/}
+                  {getGPSIcon(detail)}
+                  {getGSMIcon(detail)}
+                  {getSpeedIcon(detail)}
                 </View>
     }
     return null
@@ -146,10 +146,10 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
 
     const status = detail ? getDeviceStatus(detail) : "";
     const time = status === "active" ?
-        <Image style={styles.batterycon} source={require("../../images/timegreen.png")} />:
+        <Image style={styles.activenessIcon} source={require("../../images/timegreen.png")} />:
         status === "passive" ?
-          <Image style={styles.batterycon} source={require("../../images/timeyellow.png")} /> :
-          <Image style={styles.batterycon} source={require("../../images/timered.png")} />;
+          <Image style={styles.activenessIcon} source={require("../../images/timeyellow.png")} /> :
+          <Image style={styles.activenessIcon} source={require("../../images/timered.png")} />;
 
     return (
         <View style={styles.deviceItem}>
@@ -159,7 +159,7 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
                     {nm}
                 </Text>
                 <View style={styles.deviceMainInfoDescription}>
-                    <Text style={styles.timeAgo}>
+                    <Text style={styles.timeAgoWrap}>
                       {time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}
                     </Text>
                     {/*<br/>*/}
