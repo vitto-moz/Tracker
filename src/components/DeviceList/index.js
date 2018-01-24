@@ -45,21 +45,12 @@ class DeviceList extends Component {
     }
 
     render() {
-        const myScrollbar = {
-            width: "100%",
-            height: "100%",
-        };
-
         return !this.props.loaded ? null :
           <View style={this.props.showList ? styles.deviceListWrap : [styles.deviceListWrap, styles.deviceListWrapActive]}>
-              {/*<ul className='list-of-devices'>*/}
-                  {/*<Scrollbars style={myScrollbar}>*/}
-                      <Text style={styles.deviceListTitle}>
-                          Devices : {this.props.items.length}
-                      </Text>
-                      {this.getItemsList()}
-                  {/*</Scrollbars>*/}
-              {/*</ul>*/}
+            <Text style={styles.deviceListTitle}>
+                Devices : {this.props.items.length}
+            </Text>
+            {this.getItemsList()}
           </View>
     }
 }
