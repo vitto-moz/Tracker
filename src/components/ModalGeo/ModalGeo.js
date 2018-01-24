@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import './modal.css';
+import '../Modal/modal.css';
 
 class Modal extends PureComponent{
     constructor(props){
