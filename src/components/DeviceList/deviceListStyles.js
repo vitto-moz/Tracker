@@ -11,14 +11,17 @@ const styles = StyleSheet.create({
     left: -500,
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: 100
+    paddingTop: 70
   },
   deviceListWrapActive: {
     left: 0
   },
   deviceListTitle: {
-    flex: 1,
-    color: 'black'
+    color: '#a5a5a5',
+    fontSize: 13,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: '#50585b'
   }
 })
 
