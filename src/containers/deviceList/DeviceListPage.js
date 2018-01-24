@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Header from "../../components/deviceList/header";
 // import Bottom from "../../components/deviceList/bottom";
 // import DeviceList from "../../components/deviceList/deviceList";
-import MapComponent from "../../components/deviceList/map";
+// import MapComponent from "../../components/deviceList/map";
 import { connect } from "react-redux";
 import { getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo } from '../../actions/deviceActions';
 import { AsyncStorage, View } from "react-native"
-import {Actions} from "react-native-router-flux"
+import { Actions } from "react-native-router-flux"
+import styles from "./DeviceListPageStyles"
+import Map from "../../components/Map"
 // import Modal from "../../components/deviceList/Modal";
 // import ModalGeo from "../../components/deviceList/ModalGeo";
 
@@ -210,6 +212,7 @@ class DeviceListPage extends Component {
         return (
             <View className='devicePageWrapper'>
                 <Header toggleList={() => this.toggleList()} logout={() => this.logout()}/>
+                <Map/>
                 {/*<div className="device-main">*/}
                     {/*<DeviceList changeMapDirection={(id) => {*/}
                         {/*this.changeMapDirection(id)*/}
