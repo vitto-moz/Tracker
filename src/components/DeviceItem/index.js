@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import moment from 'moment';
 // import Collapsible from 'react-collapsible';
 import HistoryBlock from '../../containers/DeviceListPage/historyBlock';
-import {Image} from "react-native"
+import {Image, Text, View} from "react-native"
+import styles from "./deviceItemStyles"
 /**
  * Return status of the devise base on it's last activity
  * @param detail Device detail
@@ -48,13 +49,13 @@ function getGSMIcon(detail) {
             let gsmSignal = detail['pos']['p']['gsm_csq'];
             if (detail['hw'] === 646) {
                 let level = getLevel(gsmSignal, [10, 14, 17, 20, 999]);
-                return <Image style={styles.batterycon} source={{uri: `../../images/signal_${level}.svg`}} />
+                return <Image style={styles.batterycon} source={{uri: `../../images/signal_${level}.png`}} />
             } else {
                 let level = getLevel(gsmSignal, [6, 9, 12, 20, 999]);
-                return <Image style={styles.batterycon} source={{uri: `../../images/signal_${level}.svg`}} />
+                return <Image style={styles.batterycon} source={{uri: `../../images/signal_${level}.png`}} />
             }
         }
-        return <Image style={styles.batterycon} source={require("../../images/signal_offline.svg")} />
+        return <Image style={styles.batterycon} source={require("../../images/signal_offline.png")} />
     }
 }
 
@@ -65,9 +66,9 @@ function getGPSIcon(detail) {
         let status = getDeviceStatus(detail);
         let gpsSignal = detail['pos']['p']['sats_in_view'];
         if (status !== "offline" || gpsSignal < 2) {
-            return <Image style={styles.batterycon} source={require("../../images/satellite.svg")} />
+            return <Image style={styles.batterycon} source={require("../../images/satellite.png")} />
         } else {
-          return <Image style={styles.batterycon} source={require("../../images/satellite_offline.svg")} />
+          return <Image style={styles.batterycon} source={require("../../images/satellite_offline.png")} />
         }
     }
     return null
@@ -78,12 +79,12 @@ function getSpeedIcon(detail) {
     let speed = detail['pos']['s'];
     if (status !== "offline") {
         return speed > 0 ?
-          <Image style={styles.batterycon} source={require("../../images/arrow-right.svg")} /> :
-          <Image style={styles.batterycon} source={require("../../images/arrow-minus.svg")} />;
+          <Image style={styles.batterycon} source={require("../../images/arrow-right.png")} /> :
+          <Image style={styles.batterycon} source={require("../../images/arrow-minus.png")} />;
     } else {
         return speed > 0 ?
-          <Image style={styles.batterycon} source={require("../../images/arrow-right-gray.svg")} /> :
-          <Image style={styles.batterycon} source={require("../../images/arrow-minus-gray.svg")} />;
+          <Image style={styles.batterycon} source={require("../../images/arrow-right-gray.png")} /> :
+          <Image style={styles.batterycon} source={require("../../images/arrow-minus-gray.png")} />;
     }
 }
 
@@ -105,7 +106,7 @@ DeviceStatuses.propTypes = {
 
 
 const Trigger = ()=>{
-    return <div className='trigger-more'><img src={require('../../images/more.svg')} alt=""/></div>
+    return <div className='trigger-more'><img src={require('../../images/more.png')} alt=""/></div>
 };
 const HistoryTrigger = ()=> {
     return <div className='history-trigger'>
@@ -120,24 +121,27 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
 
     const status = detail ? getDeviceStatus(detail) : "";
     const time = status === "active" ?
-        <Image style={styles.batterycon} source={require("../../images/timegreen.svg")} />:
+        <Image style={styles.batterycon} source={require("../../images/timegreen.png")} />:
         status === "passive" ?
-          <Image style={styles.batterycon} source={require("../../images/timeyellow.svg")} /> :
-          <Image style={styles.batterycon} source={require("../../images/timered.svg")} />;
+          <Image style={styles.batterycon} source={require("../../images/timeyellow.png")} /> :
+          <Image style={styles.batterycon} source={require("../../images/timered.png")} />;
 
     return (
         <View style={styles.deviceItem}>
 
-            {/*<div className={`device-main-info ${active?'active': ''}`} onClick={changeMap}>*/}
-                {/*<p className={`device-name ${status}`}>*/}
-                    {/*{nm}*/}
-                {/*</p>*/}
-                {/*<span className="device-main-info-description">*/}
-                {/*{time} {detail ? <span>{moment(detail.pos.t * 1000).fromNow()}</span> : null}*/}
+            <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }
+                  onPress={changeMap}>
+                <Text style={styles[`deviceName${status}`]}>
+                    {nm}
+                </Text>
+                <View style={styles.deviceMainInfoDescription}>
+                <Text>
+                  {time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}
+                </Text>
                 {/*<br/>*/}
                 {/*<DeviceStatuses detail={detail}/>*/}
-                {/*</span>*/}
-            {/*</div>*/}
+                </View>
+            </View>
             {/*<Collapsible handleTriggerClick={changeTrigger} trigger={ <Trigger  /> }*/}
                          {/*open={openTrigger === id} >*/}
                 {/*<Collapsible trigger={<HistoryTrigger/>}>*/}
