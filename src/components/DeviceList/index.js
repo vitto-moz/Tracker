@@ -50,7 +50,7 @@ class DeviceList extends Component {
 
         const deviceListStyles = [styles.deviceListWrap]
         if (this.props.showList) deviceListStyles.push(styles.deviceListWrapActive)
-
+        console.log('this.props.loaded ', this.props.loaded);
         return !this.props.loaded?null :
                 <View style={deviceListStyles}>
                     {/*<ul className='list-of-devices'>*/}
