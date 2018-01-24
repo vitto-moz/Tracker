@@ -10,6 +10,21 @@ import styles from "./deviceItemStyles"
  * @param detail Device detail
  * @returns {string} (active, offline, passive)
  */
+
+const images = {
+    green1: require("../../images/green1.png"),
+    green2: require("../../images/green2.png"),
+    green3: require("../../images/green3.png"),
+    gray1: require("../../images/gray1.png"),
+    gray2: require("../../images/gray2.png"),
+    gray3: require("../../images/gray3.png"),
+    signal_1: require("../../images/signal_1.png"),
+    signal_2: require("../../images/signal_2.png"),
+    signal_3: require("../../images/signal_3.png"),
+    signal_4: require("../../images/signal_4.png"),
+    signal_5: require("../../images/signal_5.png"),
+}
+
 function getDeviceStatus(detail) {
     let minutesFromNow = moment.duration(moment().diff(moment(detail.pos.t * 1000))).asMinutes();
     return minutesFromNow <= 10 ? "active" : minutesFromNow < 60 ? "passive" : "offline";
@@ -18,18 +33,23 @@ function getDeviceStatus(detail) {
 function getDeviceBattery(detail) {
     let batteryLevel;
     if(!detail.pos.p) {
-        return <span>0.00 V</span>
+        return <Text>0.00 V</Text>
     }
     if (detail.pos.p.battery_level) {
         let level = (detail.pos.p.battery_level - 1) / (100 / 3) + 1;
-        let filename = `${getDeviceStatus(detail) === "active" ? "green" : "gray"}${parseInt(level)}.svg`;
-        let img = <Image style={styles.batterycon} source={{uri: `../../images/${filename}`}} />
-        return <span>{img} {detail.pos.p.battery_level} %</span>
+        let filename = `${getDeviceStatus(detail) === "active" ? "green" : "gray"}${parseInt(level)}`;
+        console.log('filename ', filename);
+        return (
+          <View style={styles.batteryLevelWrap}>
+              <Image style={styles.batteryIcon} source={images[filename]} />
+              <Text style={styles.batteryLevel}>{detail.pos.p.battery_level}%</Text>
+          </View>
+        )
     } else {
         let voltage = detail.pos.p.battery ? parseFloat(detail.pos.p.battery) : 0;
-        batteryLevel = voltage.toFixed(2) + " V"
+        batteryLevel = <Text style={styles.batteryLevel}>{voltage.toFixed(2) + " V"}</Text>
     }
-    return <span>{batteryLevel}</span>
+    return <View>{batteryLevel}</View>
 }
 
 function getGSMIcon(detail) {
@@ -49,10 +69,10 @@ function getGSMIcon(detail) {
             let gsmSignal = detail['pos']['p']['gsm_csq'];
             if (detail['hw'] === 646) {
                 let level = getLevel(gsmSignal, [10, 14, 17, 20, 999]);
-                return <Image style={styles.batterycon} source={{uri: `../../images/signal_${level}.png`}} />
+                return <Image style={styles.batterycon} source={images[`signal_${level}`]} />
             } else {
                 let level = getLevel(gsmSignal, [6, 9, 12, 20, 999]);
-                return <Image style={styles.batterycon} source={{uri: `../../images/signal_${level}.png`}} />
+                return <Image style={styles.batterycon} source={images[`signal_${level}`]} />
             }
         }
         return <Image style={styles.batterycon} source={require("../../images/signal_offline.png")} />
@@ -90,7 +110,12 @@ function getSpeedIcon(detail) {
 
 const DeviceStatuses = ({detail}) => {
     if (detail) {
-        return <p>{getDeviceBattery(detail)} {getGPSIcon(detail)} {getGSMIcon(detail)}{getSpeedIcon(detail)}</p>
+        return <View style={styles.deviceStatusWrap}>
+                  {getDeviceBattery(detail)}
+                  {/*{getGPSIcon(detail)} */}
+                  {/*{getGSMIcon(detail)}*/}
+                  {/*{getSpeedIcon(detail)}*/}
+                </View>
     }
     return null
 
@@ -128,18 +153,17 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
 
     return (
         <View style={styles.deviceItem}>
-
             <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }
                   onPress={changeMap}>
                 <Text style={styles[`deviceName${status}`]}>
                     {nm}
                 </Text>
                 <View style={styles.deviceMainInfoDescription}>
-                <Text>
-                  {time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}
-                </Text>
-                {/*<br/>*/}
-                {/*<DeviceStatuses detail={detail}/>*/}
+                    <Text style={styles.timeAgo}>
+                      {time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}
+                    </Text>
+                    {/*<br/>*/}
+                    <DeviceStatuses detail={detail}/>
                 </View>
             </View>
             {/*<Collapsible handleTriggerClick={changeTrigger} trigger={ <Trigger  /> }*/}
