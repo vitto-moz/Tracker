@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 // import '../../containers/deviceList/DeviceList.css';
 // import DeviceItem from "../../components/deviceList/deviceItem";
-import {View} from "react-native"
+import {Text, View} from "react-native"
 // import { Scrollbars } from 'react-custom-scrollbars';
 import styles from './deviceListStyles';
 
@@ -53,7 +53,9 @@ class DeviceList extends Component {
                 <View style={deviceListStyles}>
                     {/*<ul className='list-of-devices'>*/}
                         {/*<Scrollbars style={myScrollbar}>*/}
-                            {/*<p className='device-list-title'>Devices : {this.props.items.length}</p>*/}
+                            <Text style={styles.deviceListTitle}>
+                                Devices : {this.props.items.length}
+                            </Text>
                             {/*{items}*/}
                         {/*</Scrollbars>*/}
                     {/*</ul>*/}
