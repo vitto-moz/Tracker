@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 // import DeviceItem from "../../components/deviceList/deviceItem";
 import {View} from "react-native"
 // import { Scrollbars } from 'react-custom-scrollbars';
+import styles from './deviceListStyles';
 
 
 class DeviceList extends Component {
@@ -44,9 +45,12 @@ class DeviceList extends Component {
             width: "100%",
             height: "100%",
         };
+
+        const deviceListStyles = [styles.deviceListWrap, styles.deviceListWrapActive]
+        if (this.props.showList) deviceListStyles.push(styles.deviceListWrapActive)
+
         return !this.props.loaded?null :
-                <View style={styles.deviceListWrap}>
-                  {/*${this.props.showList?'active':''}`>*/}
+                <View style={deviceListStyles}>
                     {/*<ul className='list-of-devices'>*/}
                         {/*<Scrollbars style={myScrollbar}>*/}
                             {/*<p className='device-list-title'>Devices : {this.props.items.length}</p>*/}

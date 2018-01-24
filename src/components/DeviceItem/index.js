@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import moment from 'moment';
 import Collapsible from 'react-collapsible';
-import HistoryBlock from '../../containers/deviceList/historyBlock';
+import HistoryBlock from '../../containers/DeviceListPage/historyBlock';
 /**
  * Return status of the devise base on it's last activity
  * @param detail Device detail

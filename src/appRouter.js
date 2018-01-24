@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Login from './containers/login/Login';
 import {Router, Scene} from "react-native-router-flux"
-import DeviceListPage from "./containers/deviceList/DeviceListPage"
+import DeviceListPage from "./containers/DeviceListPage/DeviceListPage"
 
 export default class AppRouter extends Component<{}> {
 

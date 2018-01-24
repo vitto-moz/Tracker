@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from "../../components/Header/header";
 // import Bottom from "../../components/deviceList/bottom";
-import DeviceList from "../../components/DeviceList/deviceList";
+import DeviceList from "../../components/DeviceList";
 // import MapComponent from "../../components/deviceList/map";
 import { connect } from "react-redux";
 import { getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo } from '../../actions/deviceActions';

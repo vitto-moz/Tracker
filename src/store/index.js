@@ -3,6 +3,7 @@ import thunkMiddleware from "redux-thunk";
 import user from '../reducers/userReducer';
 import devices from '../reducers/devicesReducer';
 import reduxReset from 'redux-reset'
+import { composeWithDevTools } from 'remote-redux-devtools';
 
 
 const rootReducer = combineReducers({
@@ -19,10 +20,9 @@ export default function configureStore() {
         store = createStore(
             rootReducer,
             initialState,
-            compose(
+            composeWithDevTools(
                 applyMiddleware(thunkMiddleware),
-                reduxReset(),
-                window.devToolsExtension ? window.devToolsExtension() : f => f
+                reduxReset()
             )
         );
     } else {

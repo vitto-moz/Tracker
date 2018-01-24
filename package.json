@@ -20,7 +20,8 @@
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "redux-reset": "^0.3.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "remote-redux-devtools": "^0.5.12"
   },
   "devDependencies": {
     "babel-jest": "22.1.0",
