@@ -5,7 +5,8 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
     flex: 1,
-    display: 'flex'
+    display: 'flex',
+    zIndex: 1
   },
   container: {
     height: '100%',

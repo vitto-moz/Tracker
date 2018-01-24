@@ -8,7 +8,7 @@ const HeaderWrap = ({toggleList, logout})=> {
 
         return (
           <Header
-            outerContainerStyles={{backgroundColor: 'black'}}
+            outerContainerStyles={{backgroundColor: 'black', zIndex: 5}}
             leftComponent={{ icon: 'menu', color: '#fff', onPress: toggleList }}
             centerComponent={<Image source={require("../../images/minifinder-tracktor-logo-login.png")}
                                     style={{width: 220, height: 30, top: 2, resizeMode: 'contain'}}/>}

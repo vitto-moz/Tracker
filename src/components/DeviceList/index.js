@@ -46,7 +46,7 @@ class DeviceList extends Component {
             height: "100%",
         };
 
-        const deviceListStyles = [styles.deviceListWrap, styles.deviceListWrapActive]
+        const deviceListStyles = [styles.deviceListWrap]
         if (this.props.showList) deviceListStyles.push(styles.deviceListWrapActive)
 
         return !this.props.loaded?null :

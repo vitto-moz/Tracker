@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from "../../components/Header/header";
+import Header from "../../components/Header";
 // import Bottom from "../../components/deviceList/bottom";
 import DeviceList from "../../components/DeviceList";
 // import MapComponent from "../../components/deviceList/map";
@@ -33,19 +33,21 @@ class DeviceListPage extends Component {
       const polygons = JSON.parse(sPolygons) || []
       const token = await AsyncStorage.getItem('token')
       this.setState({polygons, ssid: token})
+      return token
     }
 
     componentWillMount() {
-        this.setAsyncInitialState()
-        if (!this.state.ssid) {
-            // this.props.history.push('/');
-        }
-        if (this.props.devices.loaded) {
-            this.setState({items: this.props.devices.items});
-            // this.getDetailDeviceInfo(this.props.devices.items)
-        } else {
-            this.props.dispatch(getDevices(this.state.ssid));
-        }
+        this.setAsyncInitialState().then((token) => {
+            if (!token) {
+                Actions.login();
+            }
+            if (this.props.devices.loaded) {
+                this.setState({items: this.props.devices.items});
+                this.getDetailDeviceInfo(this.props.devices.items)
+            } else {
+                this.props.dispatch(getDevices(token));
+            }
+        })
     }
 
     getDetailDeviceInfo(devices) {
@@ -210,18 +212,21 @@ class DeviceListPage extends Component {
     render() {
 
         return (
-            <View className='devicePageWrapper'>
-                <Header toggleList={() => this.toggleList()} logout={() => this.logout()}/>
+            <View style={styles.devicePageWrapper}>
+                <Header toggleList={() => this.toggleList()}
+                        logout={() => this.logout()}
+                />
+
+                <DeviceList
+                    changeMapDirection={(id) => this.changeMapDirection(id)}
+                    loaded={this.props.devices.loaded}
+                    items={this.props.devices.items}
+                    showList={this.state.showList}
+                    activeItemId={this.state.activeItemId}
+                    showHistory={(id, value) => this.showItemHistory(id, value)
+                }/>
+
                 <Map/>
-                {/*<div className="device-main">*/}
-                    <DeviceList changeMapDirection={(id) => {
-                        this.changeMapDirection(id)
-                    }}
-                                loaded={this.props.devices.loaded}
-                                items={this.props.devices.items}
-                                showList={this.state.showList}
-                                activeItemId={this.state.activeItemId}
-                                showHistory={(id, value) => this.showItemHistory(id, value)}/>
                     {/*<MapComponent*/}
                         {/*edit={this.state.edit}*/}
                         {/*makeActive={this.makeActive.bind(this)}*/}

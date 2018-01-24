@@ -2,12 +2,12 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   deviceListWrap: {
-    position: 'absolute',
-    width: 200,
-    height: 500,
-    backgroundColor: 'grey',
+    width: '80%',
+    height: '100%',
+    backgroundColor: '#121211cc',
     flex: 1,
-    display: 'flex',
+    position: 'absolute',
+    zIndex: 3,
     left: -500
   },
   deviceListWrapActive: {
