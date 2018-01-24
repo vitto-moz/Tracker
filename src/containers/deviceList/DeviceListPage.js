@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from "../../components/deviceList/header";
 // import Bottom from "../../components/deviceList/bottom";
-// import DeviceList from "../../components/deviceList/deviceList";
+import DeviceList from "../../components/deviceList/deviceList";
 // import MapComponent from "../../components/deviceList/map";
 import { connect } from "react-redux";
 import { getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo } from '../../actions/deviceActions';
@@ -214,14 +214,14 @@ class DeviceListPage extends Component {
                 <Header toggleList={() => this.toggleList()} logout={() => this.logout()}/>
                 <Map/>
                 {/*<div className="device-main">*/}
-                    {/*<DeviceList changeMapDirection={(id) => {*/}
-                        {/*this.changeMapDirection(id)*/}
-                    {/*}}*/}
-                                {/*loaded={this.props.devices.loaded}*/}
-                                {/*items={this.props.devices.items}*/}
-                                {/*showList={this.state.showList}*/}
-                                {/*activeItemId={this.state.activeItemId}*/}
-                                {/*showHistory={(id, value) => this.showItemHistory(id, value)}/>*/}
+                    <DeviceList changeMapDirection={(id) => {
+                        this.changeMapDirection(id)
+                    }}
+                                loaded={this.props.devices.loaded}
+                                items={this.props.devices.items}
+                                showList={this.state.showList}
+                                activeItemId={this.state.activeItemId}
+                                showHistory={(id, value) => this.showItemHistory(id, value)}/>
                     {/*<MapComponent*/}
                         {/*edit={this.state.edit}*/}
                         {/*makeActive={this.makeActive.bind(this)}*/}

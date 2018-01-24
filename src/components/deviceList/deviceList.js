@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import '../../containers/deviceList/DeviceList.css';
-import DeviceItem from "../../components/deviceList/deviceItem";
-import { Scrollbars } from 'react-custom-scrollbars';
+// import '../../containers/deviceList/DeviceList.css';
+// import DeviceItem from "../../components/deviceList/deviceItem";
+import {View} from "react-native"
+// import { Scrollbars } from 'react-custom-scrollbars';
 
 
 class DeviceList extends Component {
@@ -28,15 +29,15 @@ class DeviceList extends Component {
         let items =[];
         if(this.props.loaded){
             items = this.props.items.map((item, index) => {
-                return <DeviceItem item={item}
-                                   key={item.id}
-                                   changeMap={()=> this.props.changeMapDirection(item.id)}
-                                   active={item.id === this.props.activeItemId}
-                                   changeTrigger={()=>this.changeTrigger(item.id)}
-                                   openTrigger={this.state.openTrigger}
-                                   showHistory={(value)=>this.props.showHistory(item.id, value)}
+                // return <DeviceItem item={item}
+                //                    key={item.id}
+                //                    changeMap={()=> this.props.changeMapDirection(item.id)}
+                //                    active={item.id === this.props.activeItemId}
+                //                    changeTrigger={()=>this.changeTrigger(item.id)}
+                //                    openTrigger={this.state.openTrigger}
+                //                    showHistory={(value)=>this.props.showHistory(item.id, value)}
 
-                />
+                // />
             });
         }
         const myScrollbar = {
@@ -44,14 +45,15 @@ class DeviceList extends Component {
             height: "100%",
         };
         return !this.props.loaded?null :
-                <div className={`device-list-wrap ${this.props.showList?'active':''}`}>
-                    <ul className='list-of-devices'>
-                        <Scrollbars style={myScrollbar}>
-                            <p className='device-list-title'>Devices : {this.props.items.length}</p>
-                            {items}
-                        </Scrollbars>
-                    </ul>
-                </div>
+                <View style={styles.deviceListWrap}>
+                  {/*${this.props.showList?'active':''}`>*/}
+                    {/*<ul className='list-of-devices'>*/}
+                        {/*<Scrollbars style={myScrollbar}>*/}
+                            {/*<p className='device-list-title'>Devices : {this.props.items.length}</p>*/}
+                            {/*{items}*/}
+                        {/*</Scrollbars>*/}
+                    {/*</ul>*/}
+                </View>
     }
 }
 
