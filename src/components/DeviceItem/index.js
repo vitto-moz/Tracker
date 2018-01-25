@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import moment from 'moment';
 // import Collapsible from 'react-collapsible';
 import HistoryBlock from '../../containers/DeviceListPage/historyBlock';
-import {Image, Text, View} from "react-native"
+import {Image, Text, TouchableOpacity, View} from "react-native"
 import styles from "./deviceItemStyles"
 /**
  * Return status of the devise base on it's last activity
@@ -151,9 +151,8 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
           <Image style={styles.activenessIcon} source={require("../../images/timered.png")} />;
 
     return (
-        <View style={styles.deviceItem}>
-            <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }
-                  onPress={changeMap}>
+        <TouchableOpacity style={styles.deviceItem} onPress={changeMap}>
+            <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }>
                 <Text style={styles[`deviceName${status}`]}>
                     {nm}
                 </Text>
@@ -172,7 +171,7 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
                 {/*</Collapsible>*/}
             {/*</Collapsible>*/}
 
-        </View>
+        </TouchableOpacity>
 
     );
 };

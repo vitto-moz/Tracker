@@ -31,9 +31,9 @@ class DeviceList extends Component {
       if(this.props.loaded){
         return <FlatList
           data={this.props.items}
+          keyExtractor={item => item.id}
           renderItem={({item}) => {
             return <DeviceItem item={item}
-                               keyExtractor={item => item.id}
                                changeMap={()=> this.props.changeMapDirection(item.id)}
                                active={item.id === this.props.activeItemId}
                                changeTrigger={()=>this.changeTrigger(item.id)}
@@ -56,5 +56,5 @@ class DeviceList extends Component {
 }
 
 
-export default (DeviceList)
+export default DeviceList
 

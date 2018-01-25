@@ -89,7 +89,7 @@ class DeviceListPage extends Component {
     changeMapDirection(id) {
         this.setState({activeItemId: id});
         let item = this.props.devices.items.find((item) => item.id === id);
-        let pos = {lat: item.detail.pos.y, lng: item.detail.pos.x};
+        let pos = {latitude: item.detail.pos.y, longitude: item.detail.pos.x};
         this.map.changePosition(pos, id);
     }
 
@@ -209,8 +209,6 @@ class DeviceListPage extends Component {
     }
 
     render() {
-        console.log('this.state.polygons ', this.state.polygons);
-
         return (
             <View style={styles.devicePageWrapper}>
                 <Header toggleList={() => this.toggleList()}
@@ -238,9 +236,7 @@ class DeviceListPage extends Component {
                     coordinates={this.props.devices.coordinates}
                     geoJSON={this.props.devices.geoJSON}
                     items={this.getActiveItems()}
-                    ref={(map) => {
-                    this.map = map;
-                    }}
+                    ref={map => this.map = map}
                     mapType={this.state.mapType}
                     finishEdit={this.finishEdit.bind(this)}
                 />
