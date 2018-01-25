@@ -1,11 +1,19 @@
 import React, {PureComponent} from "react"
 import { compose, withProps } from "recompose"
-import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polyline , Polygon } from "react-google-maps";
-import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer";
-import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
+// import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polyline , Polygon } from "react-google-maps";
+// import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer";
+// import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
 import moment from 'moment';
-import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
+import MapView, {Polygon, PROVIDER_GOOGLE} from 'react-native-maps'
+import {Image} from "react-native"
+// import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
+import styles from "./mapStyles"
 
+const images = {
+  pin0: require("../../images/0.png"),
+  pin1: require("../../images/1.png"),
+  pin2: require("../../images/2.png"),
+}
 
 function getBatteryLevel(detail) {
     let batteryLevel;
@@ -19,13 +27,14 @@ function getBatteryLevel(detail) {
 }
 
 function getIcon(detail) {
-        let minutesFromNow = moment.duration(moment().diff(moment(detail.pos.t * 1000))).asMinutes();
-        return  minutesFromNow <= 10 ? 1 : minutesFromNow < 60 ? 2 : 0;
+  let minutesFromNow = moment.duration(moment().diff(moment(detail.pos.t * 1000))).asMinutes();
+  return  minutesFromNow <= 10 ? images.pin1 : minutesFromNow < 60 ? images.pin2 : images.pin0;
 }
+
 function getMapCenter(coordinates) {
     return {
-        lat : (coordinates.maxLat + coordinates.minLat)/2,
-        lng : (coordinates.maxLng + coordinates.minLng)/2
+        latitude : (coordinates.maxLat + coordinates.minLat)/2,
+        longitude : (coordinates.maxLng + coordinates.minLng)/2
     }
 }
 
@@ -65,53 +74,60 @@ const MyMapComponent = compose(
         containerElement: <div style={{ height: `100%` }} />,
         mapElement: <div style={{ height: `100%` }} />,
     }),
-    withScriptjs,
-    withGoogleMap,
 )((props) => {
-    let center = props.pos?props.pos : { lat: -34.397, lng: 150.644 };
+    let center = props.pos
+      ? props.pos
+      : { latitude: -34.397, longitude: 150.644 };
+    center = { ...center, latitudeDelta: 0.015, longitudeDelta: 0.0121 }
+
     let zoom = !props.zoomUpdated?15:props.zoom;
 
     let mrks = props.markers.map((item)=> {
         if(!item.detail.pos.x || !item.detail.pos.y) {
             return null
         }
-        return    <Marker key={item.id} position={{lat: item.detail.pos.y, lng: item.detail.pos.x}}
-                          icon={require(`../../images/${getIcon(item.detail)}.png`)}
-                          onClick={()=> {
-                              props.toggleZoom({lat: item.detail.pos.y, lng: item.detail.pos.x},item.id);
-                          }}>
-                    {props.isOpen && props.openId === item.id && <InfoBox
-
-                        onClick={()=>props.closeInfo()}
-                        onCloseClick={()=>props.closeInfo()}
-                        options={{ closeBoxURL: ``,
-                            enableEventPropagation: false,
-                            alignBottom : true,
-                            pixelOffset : new window.google.maps.Size(-167, -55)
-
+        return    <MapView.Marker
+                        key={item.id}
+                        coordinate={{latitude: item.detail.pos.y, longitude: item.detail.pos.x}}
+                        onPress={() => {
+                          props.toggleZoom({lat: item.detail.pos.y, lng: item.detail.pos.x},item.id);
                         }}
-
                     >
-                        <div className={'google-maps-info-box'}  >
-                            <p style={{textAlign: 'center', color : 'yellow', fontSize : '18px', fontWeight: 'bold'}}>{item.nm}</p>
-                            {item.detail.pos.l?
-                                <p style={{marginBottom : '5px'}}>
-                                    <img src={require('../../images/pin-mini.png')} style={{width : '15px'}} alt=""/> {item.detail.pos.l}</p>:null}
+                        <Image style={styles.pin}
+                               source={getIcon(item.detail)}/>
+                    {/*{props.isOpen && props.openId === item.id && <InfoBox*/}
 
-                            <div style={{ display: 'flex', justifyContent: 'space-between',fontSize: `16px`, paddingTop: '5px', fontColor: `#08233B`, borderTop: '1px solid  #50585b' }}>
-                                <span>{item.detail['pos']['s'] } km/h</span>
-                                <span>{item.detail['pos']['z'] } m</span>
-                                <span>{getBatteryLevel(item.detail)}</span>
-                            </div>
-                        </div>
-                    </InfoBox>}
-                  </Marker>
+                        {/*onClick={()=>props.closeInfo()}*/}
+                        {/*onCloseClick={()=>props.closeInfo()}*/}
+                        {/*options={{ closeBoxURL: ``,*/}
+                            {/*enableEventPropagation: false,*/}
+                            {/*alignBottom : true,*/}
+                            {/*pixelOffset : new window.google.maps.Size(-167, -55)*/}
+
+                        {/*}}*/}
+
+                    {/*>*/}
+                        {/*<div className={'google-maps-info-box'}  >*/}
+                            {/*<p style={{textAlign: 'center', color : 'yellow', fontSize : '18px', fontWeight: 'bold'}}>{item.nm}</p>*/}
+                            {/*{item.detail.pos.l?*/}
+                                {/*<p style={{marginBottom : '5px'}}>*/}
+                                    {/*<img src={require('../../images/pin-mini.png')} style={{width : '15px'}} alt=""/> {item.detail.pos.l}</p>:null}*/}
+
+                            {/*<div style={{ display: 'flex', justifyContent: 'space-between',fontSize: `16px`, paddingTop: '5px', fontColor: `#08233B`, borderTop: '1px solid  #50585b' }}>*/}
+                                {/*<span>{item.detail['pos']['s'] } km/h</span>*/}
+                                {/*<span>{item.detail['pos']['z'] } m</span>*/}
+                                {/*<span>{getBatteryLevel(item.detail)}</span>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</InfoBox>}*/}
+                  </MapView.Marker>
     });
     if(props.changeMapSettings){
         zoom = getZoomLevel(props.coordinates, {height : this.map.getDiv().offsetHeight, width : this.map.getDiv().offsetWidth});
         center = getMapCenter(props.coordinates);
     }
-    let polygons = props.polygons.map((item) => {
+
+    let polygons = props.polygons ? props.polygons.map((item) => {
         if(props.activeItemId === item.id && props.edit) {
             return <Polygon key ={item.id} path={item.path} editable={true} ref={(polygon)=> this.polygon = polygon}/>
 
@@ -120,55 +136,55 @@ const MyMapComponent = compose(
 
         }
 
-    });
-    return  <GoogleMap
-        ref={(map)=>this.map = map}
-        // defaultZoom={4}
-        center={center}
-        zoom={zoom}
-        mapTypeId={props.mapType}
-        onZoomChanged={()=>props.zoomChanged(this.map.getZoom())}
-        >
-        <MarkerClusterer
-            onClick={props.onMarkerClustererClick}
-            averageCenter
-            enableRetinaIcons
-            gridSize={60}
-        >
-            {mrks}
- 
-        </MarkerClusterer>
-        {props.geoJSON?
-            <Polyline
-            path={props.geoJSON}
-            options={{strokeColor :"#FF0000", strokeOpacity : 0.8, strokeWidth : 0.8, fillOpacity : 0, geodesic : true}}
-            /> : null}
-        {/*POlygin*/}
-        {polygons}
-        {/*<Polygon path={path} editable={true}/>*/}
-        {props.drawing?  <DrawingManager ref={(poligonDraw)=>this.poligonDraw = poligonDraw}
-            defaultDrawingMode={window.google.maps.drawing.OverlayType.POLYGON}
-            drawingControl = {false}
-            defaultOptions={{
-                polygonOptions: {
-                    fillColor: `#151cff`,
-                    fillOpacity: 1,
-                    strokeWeight: 5,
-                    clickable: false,
-                    editable: false,
-                    zIndex: 1,
-                },
-            }}
-            onPolygonComplete={(value) => props.polygonFinish(value)}
+    }) : null
 
-        /> : null}
-        {props.edit?
-            <button className={'finish-edit-btn'} onClick={()=>props.finishEdit(this.polygon.getPath().getArray())}>Save</button> :
-            null
-        }
+    return  <MapView
+
+                provider={PROVIDER_GOOGLE}
+                style={styles.map}
+                region={center}
+                ref={(map)=>this.map = map}
+                // defaultZoom={4}
+                zoom={zoom}
+                mapTypeId={props.mapType}
+                onZoomChanged={()=>props.zoomChanged(this.map.getZoom())}
+            >
+                {mrks}
+
+                {props.geoJSON?
+                    <Polyline
+                    path={props.geoJSON}
+                    options={{strokeColor :"#FF0000", strokeOpacity : 0.8, strokeWidth : 0.8, fillOpacity : 0, geodesic : true}}
+                    /> : null}
+
+                {polygons}
+
+                {props.drawing?  <DrawingManager ref={(poligonDraw)=>this.poligonDraw = poligonDraw}
+                    defaultDrawingMode={window.google.maps.drawing.OverlayType.POLYGON}
+                    drawingControl = {false}
+                    defaultOptions={{
+                        polygonOptions: {
+                            fillColor: `#151cff`,
+                            fillOpacity: 1,
+                            strokeWeight: 5,
+                            clickable: false,
+                            editable: false,
+                            zIndex: 1,
+                        },
+                    }}
+                    onPolygonComplete={(value) => props.polygonFinish(value)}
+
+                /> : null}
+                {props.edit
+                  ? <button className={'finish-edit-btn'}
+                            onClick={() => props.finishEdit(this.polygon.getPath().getArray())}>
+                        Save
+                    </button>
+                  : null
+                }
 
 
-    </GoogleMap>
+    </MapView>
 }
 
 );
@@ -217,7 +233,7 @@ class MapComponent extends PureComponent {
         if(nextProps.items.length > 0 && !this.state.loaded){
             let item = nextProps.items[0];
             this.setState({
-                pos : {lat: item.detail.pos.y, lng: item.detail.pos.x},
+                pos : {latitude: item.detail.pos.y, longitude: item.detail.pos.x},
                 loaded : true
             })
         }

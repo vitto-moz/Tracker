@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import Header from "../../components/Header";
 // import Bottom from "../../components/deviceList/bottom";
 import DeviceList from "../../components/DeviceList";
-// import MapComponent from "../../components/deviceList/map";
 import { connect } from "react-redux";
 import { getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo } from '../../actions/deviceActions';
 import { AsyncStorage, View } from "react-native"
 import { Actions } from "react-native-router-flux"
 import styles from "./DeviceListPageStyles"
-import Map from "../../components/Map"
+import MapComponent from "../../components/Map/map"
 // import Modal from "../../components/deviceList/Modal";
 // import ModalGeo from "../../components/deviceList/ModalGeo";
 
@@ -210,6 +209,7 @@ class DeviceListPage extends Component {
     }
 
     render() {
+        console.log('this.state.polygons ', this.state.polygons);
 
         return (
             <View style={styles.devicePageWrapper}>
@@ -226,24 +226,24 @@ class DeviceListPage extends Component {
                     showHistory={(id, value) => this.showItemHistory(id, value)
                 }/>
 
-                <Map markers={this.getActiveItems()}/>
-                    {/*<MapComponent*/}
-                        {/*edit={this.state.edit}*/}
-                        {/*makeActive={this.makeActive.bind(this)}*/}
-                        {/*polygons={this.state.polygons}*/}
-                        {/*savePolygon={(polygon) => this.addPolygon(polygon)}*/}
-                        {/*finishDraw={() => this.finishDraw()}*/}
-                        {/*drawing={this.state.drawing}*/}
-                        {/*activeItemId={this.state.activeItemId}*/}
-                        {/*coordinates={this.props.devices.coordinates}*/}
-                        {/*geoJSON={this.props.devices.geoJSON}*/}
-                        {/*items={this.getActiveItems()}*/}
-                        {/*ref={(map) => {*/}
-                        {/*this.map = map;*/}
-                        {/*}}*/}
-                        {/*mapType={this.state.mapType}*/}
-                        {/*finishEdit={this.finishEdit.bind(this)}*/}
-                    {/*/>*/}
+                {/*<Map markers={this.getActiveItems()}/>*/}
+                <MapComponent
+                    edit={this.state.edit}
+                    makeActive={this.makeActive.bind(this)}
+                    polygons={this.state.polygons}
+                    savePolygon={(polygon) => this.addPolygon(polygon)}
+                    finishDraw={() => this.finishDraw()}
+                    drawing={this.state.drawing}
+                    activeItemId={this.state.activeItemId}
+                    coordinates={this.props.devices.coordinates}
+                    geoJSON={this.props.devices.geoJSON}
+                    items={this.getActiveItems()}
+                    ref={(map) => {
+                    this.map = map;
+                    }}
+                    mapType={this.state.mapType}
+                    finishEdit={this.finishEdit.bind(this)}
+                />
                 {/*</div>*/}
                 {/*<Bottom showModal={() => this.showModal()} showDrawModal={() => this.showDrawModal()}/>*/}
                 {/*<Modal mapType={this.state.mapType} changeMapType={(type) => {*/}
