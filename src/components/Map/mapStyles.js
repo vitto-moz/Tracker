@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+  pin: {
+    width: 30,
+    height: 45
+  }
 })
 
 export default styles
