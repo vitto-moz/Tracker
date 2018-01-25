@@ -129,11 +129,11 @@ DeviceStatuses.propTypes = {
 };
 
 
-const HistoryTrigger = ()=> {
-    return <div className='history-trigger'>
-                <Image source={require('../../images/pin-mini.png')} />
-                <span>History</span>
-            </div>
+const HistoryTrigger = () => {
+    return <TouchableOpacity style={styles.historyTrigger}>
+                <Image style={styles.triggerImage} source={require('../../images/pin-mini.png')} />
+                <Text style={styles.triggerText}>History</Text>
+            </TouchableOpacity>
 };
 
 
@@ -146,13 +146,6 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
         status === "passive" ?
           <Image style={styles.activenessIcon} source={require("../../images/timeyellow.png")} /> :
           <Image style={styles.activenessIcon} source={require("../../images/timered.png")} />;
-
-
-    const Trigger = () => {
-        return <TouchableOpacity style={styles.triggerMore} onPress={changeTrigger}>
-            <Image style={styles.batteryIcon} source={require('../../images/more.png')} />;
-        </TouchableOpacity>
-      };
 
     return (
         <TouchableOpacity style={styles.deviceItem} onPress={changeMap}>
@@ -170,10 +163,12 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
                 </View>
             </View>
 
-            <Collapsible collapsed={openTrigger !== id} handleTriggerClick={changeTrigger} open={openTrigger === id} >
-                <Collapsible trigger={<HistoryTrigger/>}>
+
+            <Collapsible collapsed={openTrigger !== id}>
+                {HistoryTrigger()}
+                {/*<Collapsible trigger={<HistoryTrigger/>}>*/}
                    {/*<HistoryBlock showHistory={showHistory} id={id}/>*/}
-                </Collapsible>
+                {/*</Collapsible>*/}
             </Collapsible>
 
             <TouchableOpacity style={styles.triggerMore}

@@ -14,17 +14,9 @@ class DeviceList extends Component {
             openTrigger : null,
         }
     }
-    changeTrigger(id){
-        if(id === this.state.openTrigger){
-            this.setState({
-                openTrigger : null
-            })
-        }else {
-            this.setState({
-                openTrigger : id
-            })
-        }
-
+    changeTrigger = (id) => {
+      if (id === this.state.openTrigger) this.setState({ openTrigger : null })
+      else this.setState({ openTrigger : id})
     }
 
     getItemsList = () => {
@@ -32,14 +24,15 @@ class DeviceList extends Component {
         return <FlatList
           data={this.props.items}
           keyExtractor={item => item.id}
+          extraData={this.state}
           renderItem={({item}) => {
             return <DeviceItem item={item}
-                               changeMap={()=> this.props.changeMapDirection(item.id)}
-                               active={item.id === this.props.activeItemId}
-                               changeTrigger={()=>this.changeTrigger(item.id)}
-                               openTrigger={this.state.openTrigger}
-                               showHistory={(value)=>this.props.showHistory(item.id, value)}/>}
-          }
+                               changeMap={ ()=> this.props.changeMapDirection(item.id) }
+                               active={ item.id === this.props.activeItemId }
+                               changeTrigger={ () => this.changeTrigger(item.id) }
+                               openTrigger={ this.state.openTrigger }
+                               showHistory={ (value)=>this.props.showHistory(item.id, value)}/>
+          }}
         />
       }
     }

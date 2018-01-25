@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
   deviceMainInfo: {
     display: 'flex',
     alignItems: 'flex-start',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    padding: 10
   },
   batteryIcon: {
     width: 30,
@@ -19,12 +20,13 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   deviceItem: {
-    padding: 10,
     display: 'flex',
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderColor: '#50585b'
+    borderColor: '#50585b',
+    position: 'relative',
+    width: '100%',
   },
   deviceNamepassive: {
     color: '#d2ac14',
@@ -59,6 +61,22 @@ const styles = StyleSheet.create({
     padding: 5,
     right: 0,
     top: 10,
+  },
+  historyTrigger: {
+    borderTopWidth: 1,
+    borderColor: '#50585b',
+    // width: '100%',
+    position: 'relative',
+    padding: 10,
+    flex: 1,
+    flexDirection: 'row',
+  },
+  triggerText: {
+    fontSize: 15,
+    color: 'white'
+  },
+  triggerImage: {
+    marginRight: 10,
   }
 })
 
