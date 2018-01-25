@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   inputIcon: {
     height: 45,
     width: 45,
-    marginRight: 10,
+    backgroundColor: '#282c31'
   },
   loginFormInput: {
     backgroundColor: '#99d5eb33',
@@ -53,13 +53,14 @@ const styles = StyleSheet.create({
     height: 45,
     marginTop: 10,
     flexDirection: 'column',
-    position: 'relative'
+    position: 'relative',
+    width: '100%'
   },
   loginSubmitButton: {
     backgroundColor: '#00aeef',
     height: 45,
     marginTop: 10,
-    width: 245,
+    width: 292,
     marginRight: 0,
     marginLeft: 0,
     borderRadius: 4
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     height: 45,
     marginTop: 10,
     marginRight: 0,
-    width: 245,
+    width: 292,
     borderRadius: 4
   },
   checkboxTextStyle: {
