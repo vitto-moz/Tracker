@@ -226,7 +226,7 @@ class DeviceListPage extends Component {
                     showHistory={(id, value) => this.showItemHistory(id, value)
                 }/>
 
-                <Map/>
+                <Map markers={this.getActiveItems()}/>
                     {/*<MapComponent*/}
                         {/*edit={this.state.edit}*/}
                         {/*makeActive={this.makeActive.bind(this)}*/}
@@ -239,7 +239,7 @@ class DeviceListPage extends Component {
                         {/*geoJSON={this.props.devices.geoJSON}*/}
                         {/*items={this.getActiveItems()}*/}
                         {/*ref={(map) => {*/}
-                            {/*this.map = map;*/}
+                        {/*this.map = map;*/}
                         {/*}}*/}
                         {/*mapType={this.state.mapType}*/}
                         {/*finishEdit={this.finishEdit.bind(this)}*/}

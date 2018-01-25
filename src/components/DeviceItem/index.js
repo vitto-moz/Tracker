@@ -38,7 +38,6 @@ function getDeviceBattery(detail) {
     if (detail.pos.p.battery_level) {
         let level = (detail.pos.p.battery_level - 1) / (100 / 3) + 1;
         let filename = `${getDeviceStatus(detail) === "active" ? "green" : "gray"}${parseInt(level)}`;
-        console.log('filename ', filename);
         return (
           <View style={styles.batteryLevelWrap}>
               <Image style={styles.batteryIcon} source={images[filename]} />
