@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   deviceListWrap: {
-    width: '80%',
+    width: '100%',
     height: '100%',
     backgroundColor: '#121211cc',
     flex: 1,

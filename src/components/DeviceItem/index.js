@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import moment from 'moment';
-import HistoryBlock from '../../containers/DeviceListPage/historyBlock';
+import HistoryBlock from './HistoryBlock';
 import {Image, Text, TouchableOpacity, View} from "react-native"
 import styles from "./deviceItemStyles"
 import Collapsible from 'react-native-collapsible';
@@ -128,15 +128,6 @@ DeviceStatuses.propTypes = {
 
 };
 
-
-const HistoryTrigger = () => {
-    return <TouchableOpacity style={styles.historyTrigger}>
-                <Image style={styles.triggerImage} source={require('../../images/pin-mini.png')} />
-                <Text style={styles.triggerText}>History</Text>
-            </TouchableOpacity>
-};
-
-
 const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, active}) => {
     const {nm, detail, id} = item;
 
@@ -147,37 +138,44 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
           <Image style={styles.activenessIcon} source={require("../../images/timeyellow.png")} /> :
           <Image style={styles.activenessIcon} source={require("../../images/timered.png")} />;
 
-    return (
-        <TouchableOpacity style={styles.deviceItem} onPress={changeMap}>
 
-            <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }>
-                <Text style={styles[`deviceName${status}`]}>
-                    {nm}
-                </Text>
-                <View style={styles.deviceMainInfoDescription}>
-                    <Text style={styles.timeAgoWrap}>
-                      {time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}
-                    </Text>
-                    {/*<br/>*/}
-                    <DeviceStatuses detail={detail}/>
-                </View>
-            </View>
-
-
-            <Collapsible collapsed={openTrigger !== id}>
-                {HistoryTrigger()}
-                {/*<Collapsible trigger={<HistoryTrigger/>}>*/}
-                   {/*<HistoryBlock showHistory={showHistory} id={id}/>*/}
-                {/*</Collapsible>*/}
-            </Collapsible>
-
-            <TouchableOpacity style={styles.triggerMore}
-                              onPress={changeTrigger}>
-                <Image style={styles.batteryIcon}
-                       source={require('../../images/more.png')}/>
-            </TouchableOpacity>
-
+    const HistoryTrigger = () => {
+        return <TouchableOpacity style={styles.historyTrigger} onPress={showHistory}>
+            <Image style={styles.triggerImage} source={require('../../images/pin-mini.png')} />
+            <Text style={styles.triggerText}>History</Text>
         </TouchableOpacity>
+    };
+
+    return (
+            <TouchableOpacity style={styles.deviceItem} onPress={changeMap}>
+
+                <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }>
+                    <Text style={styles[`deviceName${status}`]}>
+                        {nm}
+                    </Text>
+                    <View style={styles.deviceMainInfoDescription}>
+                        <Text style={styles.timeAgoWrap}>
+                          {time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}
+                        </Text>
+                        <DeviceStatuses detail={detail}/>
+                    </View>
+                </View>
+
+
+                <Collapsible collapsed={openTrigger !== id}>
+                    {HistoryTrigger()}
+                    <Collapsible trigger={<HistoryTrigger/>} collapsed={!showHistory}>
+                       <HistoryBlock showHistory={showHistory} id={id}/>
+                    </Collapsible>
+                </Collapsible>
+
+                <TouchableOpacity style={styles.triggerMore}
+                                  onPress={changeTrigger}>
+                    <Image style={styles.batteryIcon}
+                           source={require('../../images/more.png')}/>
+                </TouchableOpacity>
+
+            </TouchableOpacity>
 
     );
 };
