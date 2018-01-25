@@ -141,9 +141,9 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
 
     const HistoryTrigger = () => {
         return <TouchableOpacity style={styles.historyTrigger} onPress={showHistory}>
-            <Image style={styles.triggerImage} source={require('../../images/pin-mini.png')} />
-            <Text style={styles.triggerText}>History</Text>
-        </TouchableOpacity>
+                    <Image style={styles.triggerImage} source={require('../../images/pin-mini.png')} />
+                    <Text style={styles.triggerText}>History</Text>
+                </TouchableOpacity>
     };
 
     return (

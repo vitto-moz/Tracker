@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {getDeviceHistory} from '../../../actions/deviceActions';
 import {connect} from "react-redux";
-import {Text, View} from "react-native"
+import {Text, TouchableOpacity, View} from "react-native"
 import {Button} from "react-native-elements"
 import styles from "./historyBlockStyles"
 import { AsyncStorage } from "react-native"
@@ -42,19 +42,21 @@ class HistoryBlock extends Component {
 
     render() {
         const historyTimes = HISTORY_ARR.map((item, index) => {
-            return <View key={index}
+            return <TouchableOpacity key={index}
                          onPress={() => this.pickValue(item.value)}
-                            className={this.state.pickedValue === index ? 'active' : ''}
+                          style={ this.state.pickedValue === index
+                                    ? [styles.historyTimeItem, styles.historyTimeItemActive]
+                                    : styles.historyTimeItem }
                     >
-                        <Text>Past {item.time}</Text>
-                    </View>
+                        <Text style={styles.historyTimeText}>Past {item.time}</Text>
+                    </TouchableOpacity>
         });
         return <View className='history-list '>
                 {historyTimes}
-                <Button containerViewStyle={styles.loginSubmitButton}
-                  backgroundColor='#00aeef'
-                  title={this.props.history_load ? 'Loading' : 'View WayPoints'}
-                  onPress={() => this.getHistory()}/>
+                <Button containerViewStyle={styles.viewWayPointsButton}
+                        backgroundColor='#00aeef'
+                        title={this.props.history_load ? 'Loading' : 'View WayPoints'}
+                        onPress={() => this.getHistory()}/>
               </View>
 
     }
