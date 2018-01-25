@@ -53,6 +53,12 @@ const styles = StyleSheet.create({
   deviceStatusWrap: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  triggerMore: {
+    position: 'absolute',
+    padding: 5,
+    right: 0,
+    top: 10,
   }
 })
 

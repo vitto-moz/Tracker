@@ -1,10 +1,10 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import moment from 'moment';
-// import Collapsible from 'react-collapsible';
 import HistoryBlock from '../../containers/DeviceListPage/historyBlock';
 import {Image, Text, TouchableOpacity, View} from "react-native"
 import styles from "./deviceItemStyles"
+import Collapsible from 'react-native-collapsible';
 /**
  * Return status of the devise base on it's last activity
  * @param detail Device detail
@@ -129,9 +129,6 @@ DeviceStatuses.propTypes = {
 };
 
 
-const Trigger = ()=>{
-    return <div className='trigger-more'><img src={require('../../images/more.png')} alt=""/></div>
-};
 const HistoryTrigger = ()=> {
     return <div className='history-trigger'>
                 <Image source={require('../../images/pin-mini.png')} />
@@ -150,8 +147,16 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
           <Image style={styles.activenessIcon} source={require("../../images/timeyellow.png")} /> :
           <Image style={styles.activenessIcon} source={require("../../images/timered.png")} />;
 
+
+    const Trigger = () => {
+        return <TouchableOpacity style={styles.triggerMore} onPress={changeTrigger}>
+            <Image style={styles.batteryIcon} source={require('../../images/more.png')} />;
+        </TouchableOpacity>
+      };
+
     return (
         <TouchableOpacity style={styles.deviceItem} onPress={changeMap}>
+
             <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }>
                 <Text style={styles[`deviceName${status}`]}>
                     {nm}
@@ -164,12 +169,18 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
                     <DeviceStatuses detail={detail}/>
                 </View>
             </View>
-            {/*<Collapsible handleTriggerClick={changeTrigger} trigger={ <Trigger  /> }*/}
-                         {/*open={openTrigger === id} >*/}
-                {/*<Collapsible trigger={<HistoryTrigger/>}>*/}
+
+            <Collapsible collapsed={openTrigger !== id} handleTriggerClick={changeTrigger} open={openTrigger === id} >
+                <Collapsible trigger={<HistoryTrigger/>}>
                    {/*<HistoryBlock showHistory={showHistory} id={id}/>*/}
-                {/*</Collapsible>*/}
-            {/*</Collapsible>*/}
+                </Collapsible>
+            </Collapsible>
+
+            <TouchableOpacity style={styles.triggerMore}
+                              onPress={changeTrigger}>
+                <Image style={styles.batteryIcon}
+                       source={require('../../images/more.png')}/>
+            </TouchableOpacity>
 
         </TouchableOpacity>
 
