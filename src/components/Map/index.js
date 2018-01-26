@@ -8,6 +8,7 @@ import MapView, {Polygon, Polyline, PROVIDER_GOOGLE} from 'react-native-maps'
 import {Image} from "react-native"
 // import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
 import styles from "./mapStyles"
+import PolygonCreatorWrapper from "../PolygonCreator"
 
 const images = {
   pin0: require("../../images/0.png"),
@@ -147,7 +148,6 @@ const MyMapComponent = compose(
     }) : null
 
     return  <MapView
-
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
                 region={center}
@@ -156,6 +156,7 @@ const MyMapComponent = compose(
                 zoom={zoom}
                 mapTypeId={props.mapType}
                 onZoomChanged={()=>props.zoomChanged(this.map.getZoom())}
+                onPress={props.onPressHandler}
             >
                 {mrks}
 
@@ -170,35 +171,39 @@ const MyMapComponent = compose(
 
                 {polygons}
 
-                {props.drawing?  <DrawingManager ref={(poligonDraw)=>this.poligonDraw = poligonDraw}
-                    defaultDrawingMode={window.google.maps.drawing.OverlayType.POLYGON}
-                    drawingControl = {false}
-                    defaultOptions={{
-                        polygonOptions: {
-                            fillColor: `#151cff`,
-                            fillOpacity: 1,
-                            strokeWeight: 5,
-                            clickable: false,
-                            editable: false,
-                            zIndex: 1,
-                        },
-                    }}
-                    onPolygonComplete={(value) => props.polygonFinish(value)}
+                {props.children}
 
-                /> : null}
-                {props.edit
-                  ? <button className={'finish-edit-btn'}
-                            onClick={() => props.finishEdit(this.polygon.getPath().getArray())}>
-                        Save
-                    </button>
-                  : null
-                }
+                {/*{props.drawing*/}
+                  {/*? <PolygonCreator ref={(poligonDraw)=>this.poligonDraw = poligonDraw}*/}
+                                    {/*provider={PROVIDER_GOOGLE}*/}
+                    {/*defaultDrawingMode={window.google.maps.drawing.OverlayType.POLYGON}*/}
+                    {/*drawingControl = {false}*/}
+                    {/*defaultOptions={{*/}
+                        {/*polygonOptions: {*/}
+                            {/*fillColor: `#151cff`,*/}
+                            {/*fillOpacity: 1,*/}
+                            {/*strokeWeight: 5,*/}
+                            {/*clickable: false,*/}
+                            {/*editable: false,*/}
+                            {/*zIndex: 1,*/}
+                        {/*},*/}
+                    {/*}}*/}
+                    {/*onPolygonComplete={(value) => props.polygonFinish(value)}*/}
+
+                {/*/> : null}*/}
+                {/*{props.edit*/}
+                  {/*? <button className={'finish-edit-btn'}*/}
+                            {/*onClick={() => props.finishEdit(this.polygon.getPath().getArray())}>*/}
+                        {/*Save*/}
+                    {/*</button>*/}
+                  {/*: null*/}
+                {/*}*/}
 
 
     </MapView>
-}
+});
 
-);
+const WrappedWithPolygonCreator = PolygonCreatorWrapper(MyMapComponent)
 
 class MapComponent extends PureComponent {
     constructor(props){
@@ -262,25 +267,25 @@ class MapComponent extends PureComponent {
     }
     render() {
         return (
-            <MyMapComponent  pos={this.state.pos}
-                             markers={this.props.items}
-                             mapType={this.props.mapType}
-                             zoomChanged={(e)=>this.onZoomChange(e)}
-                             zoom={this.state.zoom}
-                             zoomUpdated={this.state.zoomUpdated}
-                             toggleZoom={(pos, id)=>this.toggleZoom(pos, id)}
-                             isOpen={this.state.isOpen}
-                             openId={this.state.openId}
-                             closeInfo={()=>this.closeInfo()}
-                             geoJSON={this.props.geoJSON}
-                             coordinates={this.props.coordinates}
-                             changeMapSettings={this.state.changeMapSettings}
-                             drawing={this.props.drawing}
-                             polygonFinish={(e)=>this.polygonFinish(e)}
-                             polygons={this.props.polygons}
-                             edit={this.props.edit}
-                             activeItemId={this.props.activeItemId}
-                             finishEdit={(path)=>this.props.finishEdit(path)}
+            <WrappedWithPolygonCreator  pos={this.state.pos}
+                                         markers={this.props.items}
+                                         mapType={this.props.mapType}
+                                         zoomChanged={(e)=>this.onZoomChange(e)}
+                                         zoom={this.state.zoom}
+                                         zoomUpdated={this.state.zoomUpdated}
+                                         toggleZoom={(pos, id)=>this.toggleZoom(pos, id)}
+                                         isOpen={this.state.isOpen}
+                                         openId={this.state.openId}
+                                         closeInfo={()=>this.closeInfo()}
+                                         geoJSON={this.props.geoJSON}
+                                         coordinates={this.props.coordinates}
+                                         changeMapSettings={this.state.changeMapSettings}
+                                         drawing={this.props.drawing}
+                                         polygonFinish={(e)=>this.polygonFinish(e)}
+                                         polygons={this.props.polygons}
+                                         edit={this.props.edit}
+                                         activeItemId={this.props.activeItemId}
+                                         finishEdit={(path)=>this.props.finishEdit(path)}
             />
 
         )
