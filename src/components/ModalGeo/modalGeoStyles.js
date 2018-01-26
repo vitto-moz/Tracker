@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   },
   modalText : {
     fontSize: 20,
+    color: '#4C5264',
     textAlign: 'center'
   }
 })
