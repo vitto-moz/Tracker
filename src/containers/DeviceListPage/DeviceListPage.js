@@ -8,8 +8,8 @@ import { Actions } from "react-native-router-flux"
 import styles from "./DeviceListPageStyles"
 import MapComponent from "../../components/Map"
 import Bottom from "../../components/Bottom"
+import ModalGeo from "../../components/ModalGeo"
 // import Modal from "../../components/deviceList/Modal";
-// import ModalGeo from "../../components/deviceList/ModalGeo";
 
 class DeviceListPage extends Component {
 
@@ -132,6 +132,7 @@ class DeviceListPage extends Component {
     }
 
     showDrawModal() {
+        console.log('this.state.activeItemId !== null ', this.state.activeItemId !== null);
         if (this.state.activeItemId !== null) {
 
             this.setState({
@@ -167,9 +168,8 @@ class DeviceListPage extends Component {
     }
 
     isPolygonPresent() {
-        let polygon = this.state.polygons.find((item) => {
-            return item.id === this.state.activeItemId
-        });
+        let polygon = this.state.polygons
+          ? this.state.polygons.find((item) => item.id === this.state.activeItemId) : null
         return !!polygon;
     }
 
@@ -244,11 +244,12 @@ class DeviceListPage extends Component {
                 {/*<Modal mapType={this.state.mapType} changeMapType={(type) => {*/}
                     {/*this.changeMapType(type)*/}
                 {/*}} showModal={this.state.showModal}/>*/}
-                {/*<ModalGeo editPolygon={() => {*/}
-                    {/*this.editPolygon()*/}
-                {/*}} deletePolygon={this.deletePolygon.bind(this)} isPolygonPresent={this.isPolygonPresent()}*/}
-                          {/*showModal={this.state.showDrawModal} createPolygon={() => this.createPolygon()}*/}
-                          {/*closeDrawModal={() => this.closeDrawModal()}/>*/}
+                <ModalGeo editPolygon={() => this.editPolygon()}
+                          deletePolygon={this.deletePolygon.bind(this)}
+                          isPolygonPresent={this.isPolygonPresent()}
+                          showModal={this.state.showDrawModal}
+                          createPolygon={() => this.createPolygon()}
+                          closeDrawModal={() => this.closeDrawModal()}/>
             </View>
         );
     }

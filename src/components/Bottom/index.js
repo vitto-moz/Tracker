@@ -10,11 +10,11 @@ const Bottom =({showModal, showDrawModal})=> {
                   <Image style={styles.optionImage} source={require('../../images/track.png')} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.mapOptionWrap} onClick={showDrawModal}>
+                <TouchableOpacity style={styles.mapOptionWrap} onPress={showDrawModal}>
                   <Image style={styles.optionImage} source={require('../../images/GeoFence3.png')} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.mapOptionWrap} onClick={showModal}>
+                <TouchableOpacity style={styles.mapOptionWrap} onPress={showModal}>
                   <Image style={styles.optionImage} source={require('../../images/setting.png')} />
                 </TouchableOpacity>
 
