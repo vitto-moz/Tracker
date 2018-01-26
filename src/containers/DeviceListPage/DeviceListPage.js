@@ -7,7 +7,7 @@ import { getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo } from '../..
 import { AsyncStorage, View } from "react-native"
 import { Actions } from "react-native-router-flux"
 import styles from "./DeviceListPageStyles"
-import MapComponent from "../../components/Map/map"
+import MapComponent from "../../components/Map"
 // import Modal from "../../components/deviceList/Modal";
 // import ModalGeo from "../../components/deviceList/ModalGeo";
 
@@ -67,7 +67,7 @@ class DeviceListPage extends Component {
             this.setState({items: nextProps.devices.items});
             if (!nextProps.devices.gettingInfo) {
                 this.getDetailDeviceInfo(nextProps.devices.items);
-                // this.getDeviceGeoInfo(nextProps.devices.items);
+                this.getDeviceGeoInfo(nextProps.devices.items);
             }
         }
         if (nextProps.devices.redirect) {

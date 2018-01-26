@@ -164,7 +164,7 @@ const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, 
 
                 <Collapsible collapsed={openTrigger !== id}>
                     {HistoryTrigger()}
-                    <Collapsible trigger={<HistoryTrigger/>} collapsed={!showHistory}>
+                    <Collapsible collapsed={!showHistory}>
                        <HistoryBlock showHistory={showHistory} id={id}/>
                     </Collapsible>
                 </Collapsible>
