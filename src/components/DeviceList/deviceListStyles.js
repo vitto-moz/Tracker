@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     left: -500,
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: 70
+    paddingTop: 70,
+    paddingBottom: 62,
   },
   deviceListWrapActive: {
     left: 0

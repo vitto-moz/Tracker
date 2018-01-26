@@ -5,9 +5,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: '100%',
     width: '100%',
-    justifyContent: 'flex-start'
-    // display: 'flex',
-    // flexDirection: 'column'
+    justifyContent: 'space-between',
   }
 })
 

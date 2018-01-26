@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Header from "../../components/Header";
-// import Bottom from "../../components/deviceList/bottom";
 import DeviceList from "../../components/DeviceList";
 import { connect } from "react-redux";
 import { getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo } from '../../actions/deviceActions';
@@ -8,6 +7,7 @@ import { AsyncStorage, View } from "react-native"
 import { Actions } from "react-native-router-flux"
 import styles from "./DeviceListPageStyles"
 import MapComponent from "../../components/Map"
+import Bottom from "../../components/Bottom"
 // import Modal from "../../components/deviceList/Modal";
 // import ModalGeo from "../../components/deviceList/ModalGeo";
 
@@ -224,7 +224,6 @@ class DeviceListPage extends Component {
                     showHistory={(id, value) => this.showItemHistory(id, value)
                 }/>
 
-                {/*<Map markers={this.getActiveItems()}/>*/}
                 <MapComponent
                     edit={this.state.edit}
                     makeActive={this.makeActive.bind(this)}
@@ -240,8 +239,8 @@ class DeviceListPage extends Component {
                     mapType={this.state.mapType}
                     finishEdit={this.finishEdit.bind(this)}
                 />
-                {/*</div>*/}
-                {/*<Bottom showModal={() => this.showModal()} showDrawModal={() => this.showDrawModal()}/>*/}
+
+                <Bottom showModal={() => this.showModal()} showDrawModal={() => this.showDrawModal()}/>
                 {/*<Modal mapType={this.state.mapType} changeMapType={(type) => {*/}
                     {/*this.changeMapType(type)*/}
                 {/*}} showModal={this.state.showModal}/>*/}
