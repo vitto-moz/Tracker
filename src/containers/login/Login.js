@@ -18,6 +18,7 @@ class Login extends Component {
             showError : null
 
         }
+        // AsyncStorage.clear()
     }
 
     componentWillMount(){

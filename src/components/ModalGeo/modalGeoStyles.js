@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
       width: 100,
       marginRight: 0,
       marginLeft: 0,
-      borderRadius: 4
+      borderRadius: 4,
+      marginBottom: 10
   },
   modalTextWrap: {
       backgroundColor: '#d1d2d3',

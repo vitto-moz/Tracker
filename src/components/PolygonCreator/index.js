@@ -40,6 +40,9 @@ const PolygonCreatorWrapper = (WrappedComponent) => {
 
     finish() {
       const { polygons, editing } = this.state;
+      const coordinates = [...editing.coordinates]
+      console.log('coordinates ', coordinates);
+      this.props.polygonFinish(coordinates)
       this.setState({
         polygons: [...polygons, editing],
         editing: null,

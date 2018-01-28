@@ -55,8 +55,8 @@ function getZoomLevel(coordinates, mapDim) {
         return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
     }
 
-    let ne = {lat : coordinates.maxLat, lng  : coordinates.maxLat};
-    let sw = {lat : coordinates.minLat, lng  : coordinates.minLat};
+    let ne = {latitude : coordinates.maxLat, longitude  : coordinates.maxLat};
+    let sw = {latitude : coordinates.minLat, longitude  : coordinates.minLat};
 
     let latFraction = (latRad(ne.lat) - latRad(sw.lat)) / Math.PI;
 
@@ -85,7 +85,7 @@ const MyMapComponent = compose(
 
     let zoom = !props.zoomUpdated ? 15 : props.zoom;
 
-    let mrks = props.markers.map((item)=> {
+    let mrks = props.markers.map((item) => {
         if(!item.detail.pos.x || !item.detail.pos.y) {
             return null
         }
@@ -100,7 +100,6 @@ const MyMapComponent = compose(
                                source={getIcon(item.detail)}/>
 
 
-                        {/*{  props.isOpen && props.openId === item.id && */}
                         {<Callout
                                 onPress={() => props.closeInfo()}
                                 onCloseClick={() => props.closeInfo()}
@@ -146,6 +145,7 @@ const MyMapComponent = compose(
 
                   </MapView.Marker>
     });
+
     if(props.changeMapSettings){
         zoom = getZoomLevel(
           props.coordinates,
@@ -159,11 +159,17 @@ const MyMapComponent = compose(
 
     let polygons = props.polygons ? props.polygons.map((item) => {
         if(props.activeItemId === item.id && props.edit) {
-            return <Polygon key ={item.id} path={item.path} editable={true} ref={(polygon)=> this.polygon = polygon}/>
+            return <Polygon key ={item.id}
+                            coordinates={item.path}
+                            fillColor="#99d5eb33"
+                            editable={true}
+                            ref={(polygon)=> this.polygon = polygon}/>
 
         } else {
-            return <Polygon key ={item.id} path={item.path} editable={false}/>
-
+            return <Polygon key ={item.id}
+                            fillColor="#99d5eb33"
+                            coordinates={item.path}
+                            editable={false}/>
         }
 
     }) : null
@@ -192,7 +198,7 @@ const MyMapComponent = compose(
 
                 {polygons}
 
-                {props.children}
+                {props.drawing ? props.children : null}
 
                 {/*{props.drawing*/}
                   {/*? <PolygonCreator ref={(poligonDraw)=>this.poligonDraw = poligonDraw}*/}
@@ -212,6 +218,7 @@ const MyMapComponent = compose(
                     {/*onPolygonComplete={(value) => props.polygonFinish(value)}*/}
 
                 {/*/> : null}*/}
+
                 {/*{props.edit*/}
                   {/*? <button className={'finish-edit-btn'}*/}
                             {/*onClick={() => props.finishEdit(this.polygon.getPath().getArray())}>*/}
@@ -280,11 +287,12 @@ class MapComponent extends PureComponent {
             })
         }
     }
-    polygonFinish(polygon) {
-        window.google.maps.event.clearInstanceListeners(polygon);
-        polygon.setMap(null);
-        let path = (polygon.getPath().getArray());
-        this.props.savePolygon(path);
+    polygonCreationFinish(polygon) {
+        // window.google.maps.event.clearInstanceListeners(polygon);
+        // polygon.setMap(null);
+        // let path = (polygon.getPath().getArray());
+        console.log('polygons ', polygon.coordinates);
+          // this.props.savePolygon(path);
     }
     render() {
         return (
@@ -302,7 +310,9 @@ class MapComponent extends PureComponent {
                                          coordinates={this.props.coordinates}
                                          changeMapSettings={this.state.changeMapSettings}
                                          drawing={this.props.drawing}
-                                         polygonFinish={(e)=>this.polygonFinish(e)}
+                                         polygonFinish={(coordinates) => {
+                                            this.props.savePolygon(coordinates)
+                                         }}
                                          polygons={this.props.polygons}
                                          edit={this.props.edit}
                                          activeItemId={this.props.activeItemId}

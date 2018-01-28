@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   button: {
-    width: 80,
+    width: 120,
     paddingHorizontal: 12,
     alignItems: 'center',
     marginHorizontal: 10,
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 20,
     backgroundColor: 'transparent',
+    bottom: 70
   },
 });
 

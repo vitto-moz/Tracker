@@ -3,11 +3,12 @@ import {Modal, Text, TouchableOpacity, View} from "react-native"
 import styles from "./modalStyles"
 import {Button} from "react-native-elements"
 
-const MAP_TYPE = [ {type : 'standard', name :'Classic'},
-                   {type : 'satellite', name: 'Satellite'},
-                   {type: 'hybrid', name: "Hybrid"},
-                   {type: 'terrain', name : 'Terrain'},
-                 ];
+const MAP_TYPE = [
+  {type: 'standard',   name: 'Classic'},
+  {type: 'satellite',  name: 'Satellite'},
+  {type: 'hybrid',     name: 'Hybrid'},
+  {type: 'terrain',    name: 'Terrain'},
+];
 
 class SettingsModal extends PureComponent{
     constructor(props){

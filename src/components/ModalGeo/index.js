@@ -45,13 +45,11 @@ export default class ModalGeo extends PureComponent{
                     }
 
                     {this.props.isPolygonPresent
-                      ? <View>
-                          <Button containerViewStyle={styles.createButton}
+                      ? <Button containerViewStyle={styles.createButton}
                                   color={'black'}
                                   backgroundColor='#00aeef'
                                   onPress={() => this.props.editPolygon(this.state.clicked)}
                                   title={'Edit'}/>
-                      </View>
                       :null
                     }
 

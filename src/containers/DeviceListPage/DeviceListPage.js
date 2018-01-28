@@ -132,7 +132,6 @@ class DeviceListPage extends Component {
     }
 
     showDrawModal() {
-        console.log('this.state.activeItemId !== null ', this.state.activeItemId !== null);
         if (this.state.activeItemId !== null) {
 
             this.setState({
@@ -149,6 +148,7 @@ class DeviceListPage extends Component {
 
     addPolygon(path) {
         let polygons = [...this.state.polygons];
+        path = Array.from(path)
         let newPolygon = {
             id: this.state.activeItemId,
             path: path
