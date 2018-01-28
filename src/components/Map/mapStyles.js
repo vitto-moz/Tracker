@@ -20,6 +20,22 @@ const styles = StyleSheet.create({
   pin: {
     width: 30,
     height: 45
+  },
+  googleMapsInfoBox: {
+    minWidth: 300,
+    backgroundColor: '#343838',
+    opacity: 0.75,
+    position: 'relative',
+    padding: 25,
+    width: 330,
+    marginBottom: 5
+  },
+  calloutInfo: {
+    color: '#ffffff'
+  },
+  calloutAddress: {
+    color: '#ffffff',
+    marginBottom: 5,
   }
 })
 

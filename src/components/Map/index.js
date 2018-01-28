@@ -4,8 +4,8 @@ import { compose, withProps } from "recompose"
 // import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer";
 // import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
 import moment from 'moment';
-import MapView, {Polygon, Polyline, PROVIDER_GOOGLE} from 'react-native-maps'
-import {Image} from "react-native"
+import MapView, {Polygon, Polyline, Callout, PROVIDER_GOOGLE} from 'react-native-maps'
+import {Image, Text, View} from "react-native"
 // import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
 import styles from "./mapStyles"
 import PolygonCreatorWrapper from "../PolygonCreator"
@@ -19,12 +19,12 @@ const images = {
 function getBatteryLevel(detail) {
     let batteryLevel;
     if (detail.pos.p.battery_level) {
-        return <span> {detail.pos.p.battery_level} %</span>
+        return <Text> {detail.pos.p.battery_level} %</Text>
     } else {
         let voltage = detail.pos.p.battery ? parseFloat(detail.pos.p.battery) : 0;
         batteryLevel = voltage.toFixed(2) + " V"
     }
-    return <span>{batteryLevel}</span>
+    return <Text>{batteryLevel}</Text>
 }
 
 function getIcon(detail) {
@@ -98,31 +98,52 @@ const MyMapComponent = compose(
                     >
                         <Image style={styles.pin}
                                source={getIcon(item.detail)}/>
-                    {/*{props.isOpen && props.openId === item.id && <InfoBox*/}
 
-                        {/*onClick={()=>props.closeInfo()}*/}
-                        {/*onCloseClick={()=>props.closeInfo()}*/}
-                        {/*options={{ closeBoxURL: ``,*/}
-                            {/*enableEventPropagation: false,*/}
-                            {/*alignBottom : true,*/}
-                            {/*pixelOffset : new window.google.maps.Size(-167, -55)*/}
 
-                        {/*}}*/}
+                        {/*{  props.isOpen && props.openId === item.id && */}
+                        {<Callout
+                                onPress={() => props.closeInfo()}
+                                onCloseClick={() => props.closeInfo()}
+                                tooltip={true}
+                            >
+                                <View style={styles.googleMapsInfoBox}>
 
-                    {/*>*/}
-                        {/*<div className={'google-maps-info-box'}  >*/}
-                            {/*<p style={{textAlign: 'center', color : 'yellow', fontSize : '18px', fontWeight: 'bold'}}>{item.nm}</p>*/}
-                            {/*{item.detail.pos.l?*/}
-                                {/*<p style={{marginBottom : '5px'}}>*/}
-                                    {/*<img src={require('../../images/pin-mini.png')} style={{width : '15px'}} alt=""/> {item.detail.pos.l}</p>:null}*/}
+                                    <Text style={{textAlign: 'center',
+                                                    color : 'yellow',
+                                                    fontSize : 18,
+                                                    fontWeight: 'bold'}}>
+                                      {item.nm}
+                                    </Text>
 
-                            {/*<div style={{ display: 'flex', justifyContent: 'space-between',fontSize: `16px`, paddingTop: '5px', fontColor: `#08233B`, borderTop: '1px solid  #50585b' }}>*/}
-                                {/*<span>{item.detail['pos']['s'] } km/h</span>*/}
-                                {/*<span>{item.detail['pos']['z'] } m</span>*/}
-                                {/*<span>{getBatteryLevel(item.detail)}</span>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</InfoBox>}*/}
+                                    {item.detail.pos.l
+                                      ? <Text style={styles.calloutAddress}>
+                                            <Image source={require('../../images/pin-mini.png')}
+                                                   style={{width : 50, height: 70, marginRight: 10}} />
+                                          {item.detail.pos.l}
+                                        </Text>
+                                      :null
+                                    }
+
+                                    <View style={{ display: 'flex',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'space-between',
+                                                    paddingTop: 5,
+                                                    borderTopWidth: 1,
+                                                    borderColor: '#50585b'}}>
+                                        <Text style={styles.calloutInfo}>
+                                            {item.detail['pos']['s'] } km/h
+                                        </Text>
+                                        <Text style={styles.calloutInfo}>
+                                            {item.detail['pos']['z'] } m
+                                        </Text>
+                                        <Text style={styles.calloutInfo}>
+                                            {getBatteryLevel(item.detail)}
+                                        </Text>
+                                    </View>
+                                </View>
+                            </Callout>
+                        }
+
                   </MapView.Marker>
     });
     if(props.changeMapSettings){
