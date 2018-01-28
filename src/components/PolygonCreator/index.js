@@ -41,10 +41,9 @@ const PolygonCreatorWrapper = (WrappedComponent) => {
     finish() {
       const { polygons, editing } = this.state;
       const coordinates = [...editing.coordinates]
-      console.log('coordinates ', coordinates);
       this.props.polygonFinish(coordinates)
       this.setState({
-        polygons: [...polygons, editing],
+        // polygons: [...polygons, editing],
         editing: null,
         creatingHole: false,
       });
@@ -164,22 +163,22 @@ const PolygonCreatorWrapper = (WrappedComponent) => {
             {/**/}
           {/*</MapView>*/}
           <View style={styles.buttonContainer}>
-            {this.state.editing && (
-              <TouchableOpacity
-                onPress={() => this.createHole()}
-                style={[styles.bubble, styles.button]}
-              >
-                <Text>{this.state.creatingHole ? 'Finish Hole' : 'Create Hole'}</Text>
-              </TouchableOpacity>
-            )}
-            {this.state.editing && (
+            {/*{this.state.editing && (*/}
+              {/*<TouchableOpacity*/}
+                {/*onPress={() => this.createHole()}*/}
+                {/*style={[styles.bubble, styles.button]}*/}
+              {/*>*/}
+                {/*<Text>{this.state.creatingHole ? 'Finish Hole' : 'Create Hole'}</Text>*/}
+              {/*</TouchableOpacity>*/}
+            {/*)}*/}
+            {this.state.editing && this.props.drawing ? (
               <TouchableOpacity
                 onPress={() => this.finish()}
                 style={[styles.bubble, styles.button]}
               >
                 <Text>Finish</Text>
               </TouchableOpacity>
-            )}
+            ) : null}
           </View>
         </View>
       );

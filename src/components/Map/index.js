@@ -105,7 +105,7 @@ const MyMapComponent = compose(
                                 onCloseClick={() => props.closeInfo()}
                                 tooltip={true}
                             >
-                                <View style={styles.googleMapsInfoBox}>
+                          { !props.drawing && <View style={styles.googleMapsInfoBox}>
 
                                     <Text style={{textAlign: 'center',
                                                     color : 'yellow',

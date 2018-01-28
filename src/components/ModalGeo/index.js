@@ -27,7 +27,7 @@ export default class ModalGeo extends PureComponent{
               >
                 <View style={styles.modalContainer}>
                   <View style={styles.modalOverlay}
-                        onPress={()=>this.props.closeDrawModal()}/>
+                        onPress={() => this.props.closeDrawModal()}/>
 
                   <View style={styles.modalTextWrap}>
                       <Text style={styles.modalText}>Edit / Create a Geo Fence zone</Text>
@@ -40,7 +40,7 @@ export default class ModalGeo extends PureComponent{
                       : <Button containerViewStyle={styles.createButton}
                                 color={'black'}
                                 backgroundColor='#00aeef'
-                                onPress={()=>this.props.createPolygon()}
+                                onPress={() => this.props.createPolygon()}
                                 title={'Create'}/>
                     }
 
@@ -48,9 +48,13 @@ export default class ModalGeo extends PureComponent{
                       ? <Button containerViewStyle={styles.createButton}
                                   color={'black'}
                                   backgroundColor='#00aeef'
-                                  onPress={() => this.props.editPolygon(this.state.clicked)}
+                                  onPress={() => {
+                                    this.props.deletePolygon()
+                                    this.props.createPolygon()
+                                    // this.props.editPolygon(this.state.clicked)
+                                  }}
                                   title={'Edit'}/>
-                      :null
+                      : null
                     }
 
                     {this.props.isPolygonPresent
@@ -58,7 +62,7 @@ export default class ModalGeo extends PureComponent{
                           <Button containerViewStyle={styles.createButton}
                                   color={'black'}
                                   backgroundColor='#00aeef'
-                                  onPress={()=>this.props.deletePolygon()}
+                                  onPress={() => this.props.deletePolygon()}
                                   title={'Delete'}/>
                       </View>
                       : null
