@@ -9,7 +9,7 @@ import styles from "./DeviceListPageStyles"
 import MapComponent from "../../components/Map"
 import Bottom from "../../components/Bottom"
 import ModalGeo from "../../components/ModalGeo"
-// import Modal from "../../components/deviceList/Modal";
+import SettingsModal from "../../components/Modal"
 
 class DeviceListPage extends Component {
 
@@ -18,7 +18,7 @@ class DeviceListPage extends Component {
         this.state = {
             showList: true,
             items: [],
-            mapType: 'roadmap',
+            mapType: 'standard',
             showModal: false,
             showDrawModal: false,
             activeItemId: null,
@@ -241,9 +241,11 @@ class DeviceListPage extends Component {
                 />
 
                 <Bottom showModal={() => this.showModal()} showDrawModal={() => this.showDrawModal()}/>
-                {/*<Modal mapType={this.state.mapType} changeMapType={(type) => {*/}
-                    {/*this.changeMapType(type)*/}
-                {/*}} showModal={this.state.showModal}/>*/}
+
+                <SettingsModal mapType={this.state.mapType}
+                                changeMapType={(type) => this.changeMapType(type)}
+                                showModal={this.state.showModal}/>
+
                 <ModalGeo editPolygon={() => this.editPolygon()}
                           deletePolygon={this.deletePolygon.bind(this)}
                           isPolygonPresent={this.isPolygonPresent()}

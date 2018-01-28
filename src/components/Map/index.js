@@ -175,7 +175,7 @@ const MyMapComponent = compose(
                 ref={(map)=>this.map = map}
                 // defaultZoom={4}
                 zoom={zoom}
-                mapTypeId={props.mapType}
+                mapType={props.mapType}
                 onZoomChanged={()=>props.zoomChanged(this.map.getZoom())}
                 onPress={props.onPressHandler}
             >
