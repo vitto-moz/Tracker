@@ -83,7 +83,7 @@ const MyMapComponent = compose(
       : { latitude: -34.397, longitude: 150.644 };
     center = { ...center, latitudeDelta: 0.015, longitudeDelta: 0.0121 }
 
-    let zoom = !props.zoomUpdated?15:props.zoom;
+    let zoom = !props.zoomUpdated ? 15 : props.zoom;
 
     let mrks = props.markers.map((item)=> {
         if(!item.detail.pos.x || !item.detail.pos.y) {
@@ -93,7 +93,7 @@ const MyMapComponent = compose(
                         key={item.id}
                         coordinate={{latitude: item.detail.pos.y, longitude: item.detail.pos.x}}
                         onPress={() => {
-                          props.toggleZoom({lat: item.detail.pos.y, lng: item.detail.pos.x},item.id);
+                          props.toggleZoom({latitude: item.detail.pos.y, longitude: item.detail.pos.x},item.id);
                         }}
                     >
                         <Image style={styles.pin}
@@ -126,13 +126,13 @@ const MyMapComponent = compose(
                   </MapView.Marker>
     });
     if(props.changeMapSettings){
-        // zoom = getZoomLevel(
-        //   props.coordinates,
-        //   {
-        //     height : this.map.getDiv().offsetHeight,
-        //     width : this.map.getDiv().offsetWidth
-        //   }
-        // );
+        zoom = getZoomLevel(
+          props.coordinates,
+          {
+            height : this.map.getDiv().offsetHeight,
+            width : this.map.getDiv().offsetWidth
+          }
+        );
         center = getMapCenter(props.coordinates);
     }
 
@@ -233,8 +233,8 @@ class MapComponent extends PureComponent {
         this.setState({
             zoomUpdated : false,
             pos,
-            openId : id===this.state.openId?null:id,
-            isOpen : !(id===this.state.openId),
+            openId : id === this.state.openId ? null : id,
+            isOpen : !(id === this.state.openId),
             changeMapSettings : false
         });
         this.props.makeActive(id)
