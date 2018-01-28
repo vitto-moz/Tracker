@@ -40,9 +40,7 @@ export default function devices(state = initializeState(), action = {}) {
                 type: action.type,
                 geoJSON : action.payload.geoJSON.map(point => ({
                     latitude: point.lat,
-                    longitude: point.lng,
-                    latitudeDelta: 0.015,
-                    longitudeDelta: 0.0121
+                    longitude: point.lng
                 })),
                 coordinates : action.payload.coordinates,
                 history_load : false

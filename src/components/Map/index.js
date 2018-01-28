@@ -69,6 +69,8 @@ function getZoomLevel(coordinates, mapDim) {
     return Math.min(latZoom, lngZoom, ZOOM_MAX);
 }
 
+let map;
+
 const MyMapComponent = compose(
     withProps({
         googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
@@ -78,6 +80,7 @@ const MyMapComponent = compose(
         mapElement: <div style={{ height: `100%` }} />,
     }),
 )((props) => {
+
     let center = props.pos
       ? props.pos
       : { latitude: -34.397, longitude: 150.644 };
@@ -100,62 +103,74 @@ const MyMapComponent = compose(
                                source={getIcon(item.detail)}/>
 
 
-                        {<Callout
+                        <Callout
                                 onPress={() => props.closeInfo()}
                                 onCloseClick={() => props.closeInfo()}
                                 tooltip={true}
                             >
-                          { !props.drawing && <View style={styles.googleMapsInfoBox}>
+                              {!props.drawing && <View style={styles.googleMapsInfoBox}>
 
-                                    <Text style={{textAlign: 'center',
-                                                    color : 'yellow',
-                                                    fontSize : 18,
-                                                    fontWeight: 'bold'}}>
-                                      {item.nm}
+                                    <Text style={{
+                                        textAlign: 'center',
+                                        color: 'yellow',
+                                        fontSize: 18,
+                                        fontWeight: 'bold'
+                                    }}>
+                                        {item.nm}
                                     </Text>
 
                                     {item.detail.pos.l
-                                      ? <Text style={styles.calloutAddress}>
-                                            <Image source={require('../../images/pin-mini.png')}
-                                                   style={{width : 50, height: 70, marginRight: 10}} />
-                                          {item.detail.pos.l}
-                                        </Text>
-                                      :null
+                                        ? <Text style={styles.calloutAddress}>
+                                                <Image source={require('../../images/pin-mini.png')}
+                                                        style={{width: 50, height: 70, marginRight: 10}}/>
+                                        {item.detail.pos.l}
+                                            </Text>
+                                        : null
                                     }
 
-                                    <View style={{ display: 'flex',
-                                                    flexDirection: 'row',
-                                                    justifyContent: 'space-between',
-                                                    paddingTop: 5,
-                                                    borderTopWidth: 1,
-                                                    borderColor: '#50585b'}}>
-                                        <Text style={styles.calloutInfo}>
-                                            {item.detail['pos']['s'] } km/h
-                                        </Text>
-                                        <Text style={styles.calloutInfo}>
-                                            {item.detail['pos']['z'] } m
-                                        </Text>
-                                        <Text style={styles.calloutInfo}>
-                                            {getBatteryLevel(item.detail)}
-                                        </Text>
-                                    </View>
+                                  <View style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    paddingTop: 5,
+                                    borderTopWidth: 1,
+                                    borderColor: '#50585b'
+                                  }}>
+                                      <Text style={styles.calloutInfo}>
+                                        {item.detail['pos']['s']} km/h
+                                      </Text>
+                                      <Text style={styles.calloutInfo}>
+                                        {item.detail['pos']['z']} m
+                                      </Text>
+                                      <Text style={styles.calloutInfo}>
+                                        {getBatteryLevel(item.detail)}
+                                      </Text>
+                                  </View>
                                 </View>
+                              }
                             </Callout>
-                        }
-
                   </MapView.Marker>
     });
 
-    if(props.changeMapSettings){
-        zoom = getZoomLevel(
-          props.coordinates,
-          {
-            height : this.map.getDiv().offsetHeight,
-            width : this.map.getDiv().offsetWidth
-          }
-        );
-        center = getMapCenter(props.coordinates);
-    }
+      if (props.changeMapSettings) {
+        // zoom = getZoomLevel(
+        //   props.coordinates,
+        //   {
+        //     height : this.map.getDiv().offsetHeight,
+        //     width : this.map.getDiv().offsetWidth
+        //   }
+        // );
+        const wayCoordinates = [
+          {latitude: props.coordinates.maxLat, longitude: props.coordinates.maxLng},
+          {latitude: props.coordinates.minLat, longitude: props.coordinates.minLng}
+        ]
+
+        map.fitToCoordinates(
+          props.geoJSON,
+          {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: false}
+        )
+        // center = getMapCenter(props.coordinates);
+      }
 
     let polygons = props.polygons ? props.polygons.map((item) => {
         if(props.activeItemId === item.id && props.edit) {
@@ -178,9 +193,11 @@ const MyMapComponent = compose(
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
                 region={center}
-                ref={(map)=>this.map = map}
+                ref={ ref => map = ref}
                 // defaultZoom={4}
                 zoom={zoom}
+                zoomEnabled={true}
+                fitToElements={true}
                 mapType={props.mapType}
                 onZoomChanged={()=>props.zoomChanged(this.map.getZoom())}
                 onPress={props.onPressHandler}
@@ -287,13 +304,7 @@ class MapComponent extends PureComponent {
             })
         }
     }
-    polygonCreationFinish(polygon) {
-        // window.google.maps.event.clearInstanceListeners(polygon);
-        // polygon.setMap(null);
-        // let path = (polygon.getPath().getArray());
-        console.log('polygons ', polygon.coordinates);
-          // this.props.savePolygon(path);
-    }
+
     render() {
         return (
             <WrappedWithPolygonCreator  pos={this.state.pos}

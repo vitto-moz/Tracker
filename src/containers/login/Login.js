@@ -77,6 +77,7 @@ class Login extends Component {
                         <Image  style={styles.inputIcon}
                                 source={require('../../images/password.png')} />
                         <TextInput
+                          secureTextEntry={true}
                           value={this.state.password}
                           onChangeText={text => this.handleInputChange(text, 'password')}
                           style={styles.loginFormInput}
