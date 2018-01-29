@@ -3,20 +3,21 @@ import Header from "../../components/Header";
 import DeviceList from "../../components/DeviceList";
 import { connect } from "react-redux";
 import { getDevices, getDevice, getDeviceHistory, getDeviceGeoInfo } from '../../actions/deviceActions';
-import {ActivityIndicator, AsyncStorage, Text, View} from "react-native"
+import { ActivityIndicator, AsyncStorage, Text, View} from "react-native"
 import { Actions } from "react-native-router-flux"
 import styles from "./DeviceListPageStyles"
 import MapComponent from "../../components/Map"
 import Bottom from "../../components/Bottom"
 import ModalGeo from "../../components/ModalGeo"
 import SettingsModal from "../../components/Modal"
+import { BackHandler } from "react-native"
 
 class DeviceListPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            showList: true,
+            showList: false,
             items: [],
             mapType: 'standard',
             showModal: false,
@@ -49,7 +50,22 @@ class DeviceListPage extends Component {
               }
             }, 500)
         })
+        this.setOnBackHandler()
     }
+
+    setOnBackHandler(){
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        if (this.state.showList) {
+          this.setState({showList: false})
+          return true;
+        } else {
+          this.props.dispatch({type: 'RESET'});
+          AsyncStorage.removeItem('token', () => Actions.login());
+          return false;
+        }
+      });
+    }
+
 
     getDetailDeviceInfo(devices) {
         for (let i = 0; i < devices.length; i++) {
@@ -73,15 +89,12 @@ class DeviceListPage extends Component {
             }
         }
         if (nextProps.devices.redirect) {
-            AsyncStorage.removeItem('token');
-            Actions.login()
+          AsyncStorage.removeItem('token', () => Actions.login());
         }
     }
 
     toggleList() {
-        this.setState({
-            showList: !this.state.showList
-        })
+        this.setState((prevState, props)=>({showList: !prevState.showList}))
     }
 
     getActiveItems() {

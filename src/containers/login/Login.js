@@ -17,9 +17,18 @@ class Login extends Component {
             loading: false,
             rememberMe: false,
             showError : null
-
         }
         // AsyncStorage.clear()
+    }
+
+    setInitialState = () => {
+        this.setState({
+          userName: '',
+          password: '',
+          loading: false,
+          rememberMe: false,
+          showError : null
+        })
     }
 
     componentWillMount(){
@@ -40,7 +49,10 @@ class Login extends Component {
         if(nextProps.user.user){
             Keyboard.dismiss()
             if(this.state.rememberMe){
-                AsyncStorage.setItem('token', nextProps.user.ssid, () => Actions.devices())
+                AsyncStorage.setItem('token', nextProps.user.ssid, () => {
+                    Actions.devices();
+                    this.setInitialState()
+                })
                   .catch(err => console.log('err ', err))
             } else Actions.devices()
         }

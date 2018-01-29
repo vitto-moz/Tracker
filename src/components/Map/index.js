@@ -158,7 +158,7 @@ const MyMapComponent = compose(
           )
         }
       } else {
-        if (props.mapReady) {
+        if (props.mapReady && !props.drawing) {
           map.animateToRegion(
             center,
           )

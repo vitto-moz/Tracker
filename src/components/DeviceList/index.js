@@ -40,7 +40,7 @@ class DeviceList extends PureComponent {
 
     render() {
         return !this.props.loaded ? null :
-          <View style={this.props.showList ? styles.deviceListWrap : [styles.deviceListWrap, styles.deviceListWrapActive]}>
+          <View style={this.props.showList ? [styles.deviceListWrap, styles.deviceListWrapActive] : styles.deviceListWrap}>
             <Text style={styles.deviceListTitle}>
                 Devices : {this.props.items.length}
             </Text>
