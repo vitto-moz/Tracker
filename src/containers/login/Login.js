@@ -6,6 +6,7 @@ import { CheckBox, Button } from 'react-native-elements'
 import { login } from '../../actions/userActions';
 import { Actions } from "react-native-router-flux";
 import { AsyncStorage } from "react-native"
+import { Keyboard } from "react-native"
 
 class Login extends Component {
     constructor(props) {
@@ -37,6 +38,7 @@ class Login extends Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.user.user){
+            Keyboard.dismiss()
             if(this.state.rememberMe){
                 AsyncStorage.setItem('token', nextProps.user.ssid, () => Actions.devices())
                   .catch(err => console.log('err ', err))
