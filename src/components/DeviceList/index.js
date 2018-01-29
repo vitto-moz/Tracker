@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 // import '../../containers/deviceList/DeviceList.css';
 // import DeviceItem from "../../components/deviceList/deviceItem";
 import {FlatList, Text, View} from "react-native"
@@ -7,7 +7,7 @@ import styles from './deviceListStyles';
 import DeviceItem from "../DeviceItem/index"
 
 
-class DeviceList extends Component {
+class DeviceList extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,6 +23,7 @@ class DeviceList extends Component {
       if(this.props.loaded){
         return <FlatList
           data={this.props.items}
+          removeClippedSubviews={true}
           keyExtractor={item => item.id}
           extraData={this.state}
           renderItem={({item}) => {
