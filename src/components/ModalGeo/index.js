@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import {Button} from "react-native-elements"
-import {Modal, Text, View} from "react-native"
+import {Modal, Text, TouchableWithoutFeedback, View} from "react-native"
 import styles from "./modalGeoStyles"
 
 export default class ModalGeo extends PureComponent{
@@ -25,6 +25,7 @@ export default class ModalGeo extends PureComponent{
                 onRequestClose={this.props.closeDrawModal}
                 transparent={true}
               >
+                <TouchableWithoutFeedback onPress={this.props.closeDrawModal}>
                 <View style={styles.modalContainer}>
                   <View style={styles.modalOverlay}
                         onPress={() => this.props.closeDrawModal()}/>
@@ -69,8 +70,8 @@ export default class ModalGeo extends PureComponent{
                     }
 
                   </View>
-
                 </View>
+                </TouchableWithoutFeedback>
               </Modal>
           </View>
         );

@@ -8,11 +8,12 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   modalContainer: {
-    width: '85%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'stretch',
     flex: 1,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    padding: '10%'
   },
   createButton: {
       backgroundColor: '#00aeef',

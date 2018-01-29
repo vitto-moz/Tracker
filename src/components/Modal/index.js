@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {Modal, Text, TouchableOpacity, View} from "react-native"
+import {Modal, Text, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native"
 import styles from "./modalStyles"
 import {Button} from "react-native-elements"
 
@@ -51,39 +51,39 @@ class SettingsModal extends PureComponent{
 
 
         return (
+            <View style={styles.container}>
+              <Modal
+                visible={this.props.showModal}
+                animationType={'slide'}
+                onRequestClose={this.closeModal}
+                transparent={true}
+              >
+                <TouchableWithoutFeedback onPress={this.closeModal}>
+                <View style={styles.modalContainer}>
+                  {/*<View style={styles.modalOverlay}*/}
+                  {/*onPress={()=>this.props.closeDrawModal()}/>*/}
 
-          <View style={styles.container}>
-            <Modal
-              visible={this.props.showModal}
-              animationType={'slide'}
-              onRequestClose={this.closeModal}
-              transparent={true}
-            >
-              <View style={styles.modalContainer}>
-                {/*<View style={styles.modalOverlay}*/}
-                      {/*onPress={()=>this.props.closeDrawModal()}/>*/}
-
-                <View style={styles.modalTextWrap}>
-                  <Text style={styles.modalText}>Settings</Text>
-                </View>
-
-                <View style={styles.modalOptionsWrap}>
-                  <View style={styles.mapTypesWrap}>
-                    <Text style={styles.mapTypeHeaderText}>Choose Map Type:</Text>
-                    {itemList}
+                  <View style={styles.modalTextWrap}>
+                    <Text style={styles.modalText}>Settings</Text>
                   </View>
-                  <Button containerViewStyle={styles.createButton}
-                          color={'black'}
-                          backgroundColor='#00aeef'
-                          onPress={this.saveChanges}
-                          title={'Save'}/>
+
+                  <View style={styles.modalOptionsWrap}>
+                    <View style={styles.mapTypesWrap}>
+                      <Text style={styles.mapTypeHeaderText}>Choose Map Type:</Text>
+                      {itemList}
+                    </View>
+                    <Button containerViewStyle={styles.createButton}
+                            color={'black'}
+                            backgroundColor='#00aeef'
+                            onPress={this.saveChanges}
+                            title={'Save'}/>
+                  </View>
+
+
                 </View>
-
-
-              </View>
-
-            </Modal>
-          </View>
+                </TouchableWithoutFeedback>
+              </Modal>
+            </View>
         );
     }
 }

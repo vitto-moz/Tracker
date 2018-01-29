@@ -218,7 +218,7 @@ class DeviceListPage extends Component {
                 />
 
                 {
-                  !this.getActiveItems()[25]
+                  !this.getActiveItems()[28]
                     ? <View style={[styles.loaderWrap]}>
                         {/*<ActivityIndicator size="large" color="grey" />*/}
                         <Text style={styles.loadingText}>Loading...</Text>

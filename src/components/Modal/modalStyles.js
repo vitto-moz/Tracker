@@ -5,14 +5,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    height: '100%',
+    flex: 1,
   },
   modalContainer: {
-    width: '85%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'stretch',
     flex: 1,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    padding: '10%'
   },
   createButton: {
     backgroundColor: '#00aeef',
