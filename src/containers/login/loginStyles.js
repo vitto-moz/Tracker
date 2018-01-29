@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00aeef',
     height: 45,
     marginTop: 10,
-    width: 292,
+    width: 299,
     marginRight: 0,
     marginLeft: 0,
     borderRadius: 4
@@ -70,11 +70,18 @@ const styles = StyleSheet.create({
     height: 45,
     marginTop: 10,
     marginRight: 0,
-    width: 292,
+    width: 299,
     borderRadius: 4
   },
   checkboxTextStyle: {
     color: 'white'
+  },
+  errorText: {
+    color: 'red',
+    width: 299,
+    textAlign: 'center',
+    margin: 5,
+    fontSize: 15
   },
 })
 

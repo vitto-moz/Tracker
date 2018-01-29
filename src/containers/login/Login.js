@@ -104,7 +104,7 @@ class Login extends Component {
                                     onPress={this.tryLogin}
                                     title={this.props.user.loading ? 'Loading' : 'Login'}/>
 
-                          {this.state.showError ? <Text>{this.state.showError}</Text> : null}
+                          {this.state.showError ? <Text style={styles.errorText}>{this.state.showError}</Text> : null}
                     </View>
                 </View>
             </View>
