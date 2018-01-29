@@ -31,6 +31,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     bottom: 70
   },
+  pointWrap: {
+    width: 20,
+    height: 20,
+    overflow: 'visible',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  point: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    width: 5,
+    height: 5,
+    overflow: 'visible',
+    position: 'relative',
+  }
 });
 
 export default styles

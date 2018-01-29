@@ -117,6 +117,20 @@ const PolygonCreatorWrapper = (WrappedComponent) => {
     }
 
     render() {
+
+      let points = this.state.editing ? this.state.editing.coordinates.map((coordinate) => {
+        // if (!item.detail.pos.x || !item.detail.pos.y) {
+        //   return null
+        // }
+        return <MapView.Marker
+          key={coordinate.latitude}
+          coordinate={coordinate}>
+            <View style={styles.point}/>
+        </MapView.Marker>
+      }) : null;
+
+
+
       const mapOptions = {
         scrollEnabled: true,
       };
@@ -151,6 +165,7 @@ const PolygonCreatorWrapper = (WrappedComponent) => {
                 strokeWidth={1}
               />
             )}
+            {points}
           </WrappedComponent>
           {/*<MapView*/}
             {/*provider={this.props.provider}*/}
