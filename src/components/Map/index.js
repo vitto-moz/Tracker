@@ -1,12 +1,8 @@
 import React, {PureComponent} from "react"
 import { compose, withProps } from "recompose"
-// import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polyline , Polygon } from "react-google-maps";
-// import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer";
-// import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
 import moment from 'moment';
 import MapView, {Polygon, Polyline, Callout, PROVIDER_GOOGLE} from 'react-native-maps'
 import {Image, Text, View} from "react-native"
-// import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
 import styles from "./mapStyles"
 import PolygonCreatorWrapper from "../PolygonCreator"
 
@@ -165,11 +161,12 @@ const MyMapComponent = compose(
           {latitude: props.coordinates.minLat, longitude: props.coordinates.minLng}
         ]
 
+        center = getMapCenter(props.coordinates);
+
         map.fitToCoordinates(
           props.geoJSON,
           {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: false}
         )
-        // center = getMapCenter(props.coordinates);
       }
 
     let polygons = props.polygons ? props.polygons.map((item) => {
@@ -195,7 +192,7 @@ const MyMapComponent = compose(
                 region={center}
                 ref={ ref => map = ref}
                 // defaultZoom={4}
-                zoom={zoom}
+                // zoom={zoom}
                 zoomEnabled={true}
                 fitToElements={true}
                 mapType={props.mapType}
@@ -254,7 +251,7 @@ class MapComponent extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
-            zoom : 4,
+            // zoom : 4,
             isOpen : false,
             openId : null,
             zoomUpdated : true,
