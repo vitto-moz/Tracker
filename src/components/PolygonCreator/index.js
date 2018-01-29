@@ -143,7 +143,7 @@ const PolygonCreatorWrapper = (WrappedComponent) => {
       return (
         <View style={styles.container}>
           <WrappedComponent {...this.props}
-                            onPressHandler={e => this.onPress(e)}
+                            onPressHandler={e => this.props.drawing && this.onPress(e)}
           >
             {this.state.polygons.map(polygon => (
               <MapView.Polygon
