@@ -31,7 +31,11 @@ export default class ModalGeo extends PureComponent{
                         onPress={() => this.props.closeDrawModal()}/>
 
                   <View style={styles.modalTextWrap}>
-                      <Text style={styles.modalText}>Edit / Create a Geo Fence zone</Text>
+                    <Text style={styles.modalText}>
+                      {this.props.activeItemId
+                        ? 'Edit / Create a Geo Fence zone'
+                        : 'Select device, please'}
+                    </Text>
                   </View>
 
                   <View style={styles.modalOptionsWrap}>
@@ -41,8 +45,12 @@ export default class ModalGeo extends PureComponent{
                       : <Button containerViewStyle={styles.createButton}
                                 color={'black'}
                                 backgroundColor='#00aeef'
-                                onPress={() => this.props.createPolygon()}
-                                title={'Create'}/>
+                                onPress={() => {
+                                  this.props.activeItemId
+                                    ? this.props.createPolygon()
+                                    : this.props.closeDrawModal()
+                                }}
+                                title={this.props.activeItemId ? 'Create' : 'Ok'}/>
                     }
 
                     {this.props.isPolygonPresent

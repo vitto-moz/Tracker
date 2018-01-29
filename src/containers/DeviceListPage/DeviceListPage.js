@@ -134,12 +134,9 @@ class DeviceListPage extends Component {
     }
 
     showDrawModal() {
-        if (this.state.activeItemId !== null) {
-
-            this.setState({
-                showDrawModal: true
-            })
-        }
+        this.setState({
+            showDrawModal: true
+        })
     }
 
     closeDrawModal() {
@@ -261,7 +258,8 @@ class DeviceListPage extends Component {
                           isPolygonPresent={this.isPolygonPresent()}
                           showModal={this.state.showDrawModal}
                           createPolygon={() => this.createPolygon()}
-                          closeDrawModal={() => this.closeDrawModal()}/>
+                          closeDrawModal={() => this.closeDrawModal()}
+                          activeItemId={this.state.activeItemId}/>
             </View>
         );
     }
