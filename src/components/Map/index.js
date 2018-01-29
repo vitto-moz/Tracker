@@ -149,12 +149,7 @@ const MyMapComponent = compose(
     });
 
       if (props.changeMapSettings) {
-        const wayCoordinates = [
-          {latitude: props.coordinates.maxLat, longitude: props.coordinates.maxLng},
-          {latitude: props.coordinates.minLat, longitude: props.coordinates.minLng}
-        ]
-
-        center = getMapCenter(props.coordinates);
+        // center = getMapCenter(props.coordinates);
 
         if ( props.geoJSON ) {
           map.fitToCoordinates(
