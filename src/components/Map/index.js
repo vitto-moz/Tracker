@@ -256,7 +256,9 @@ class MapComponent extends PureComponent {
         }
     }
     changePosition(pos, id){
-        this.setState({pos, zoomUpdated : false, openId : id, isOpen:true, changeMapSettings : false } )
+        pos.longitude && pos.latitude
+          ? this.setState({pos, zoomUpdated : false, openId : id, isOpen:true, changeMapSettings : false } )
+          : null;
     }
     onZoomChange(e){
         if(typeof e === 'number') {
