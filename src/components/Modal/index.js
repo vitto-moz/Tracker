@@ -25,7 +25,6 @@ class SettingsModal extends PureComponent{
     }
 
     closeModal = () => {
-      console.log('this.state.initialType ', this.state.initialType);
       this.setState({clicked: this.state.initialType})
       this.props.changeMapType(this.state.initialType)
     }
