@@ -82,13 +82,6 @@ const MyMapComponent = compose(
       : { latitude: -34.397, longitude: 150.644 };
     center = { ...center, latitudeDelta: 0.015, longitudeDelta: 0.0121 }
 
-    console.log('props.geoJSON  ', props.geoJSON );
-    if (!props.geoJSON && map ) {
-        map.animateToRegion(
-            center,
-        )
-    }
-
     let zoom = !props.zoomUpdated ? 15 : props.zoom;
 
     let mrks = props.markers.map((item) => {
@@ -156,13 +149,6 @@ const MyMapComponent = compose(
     });
 
       if (props.changeMapSettings) {
-        // zoom = getZoomLevel(
-        //   props.coordinates,
-        //   {
-        //     height : this.map.getDiv().offsetHeight,
-        //     width : this.map.getDiv().offsetWidth
-        //   }
-        // );
         const wayCoordinates = [
           {latitude: props.coordinates.maxLat, longitude: props.coordinates.maxLng},
           {latitude: props.coordinates.minLat, longitude: props.coordinates.minLng}
@@ -174,6 +160,12 @@ const MyMapComponent = compose(
           map.fitToCoordinates(
             props.geoJSON,
             {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: false}
+          )
+        }
+      } else {
+        if (map ) {
+          map.animateToRegion(
+            center,
           )
         }
       }
