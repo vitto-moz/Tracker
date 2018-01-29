@@ -128,56 +128,57 @@ DeviceStatuses.propTypes = {
 
 };
 
-const DeviceItem = ({item, changeMap , openTrigger, changeTrigger, showHistory, active}) => {
-    const {nm, detail, id} = item;
-
-    const status = detail ? getDeviceStatus(detail) : "";
-    const time = status === "active" ?
-        <Image style={styles.activenessIcon} source={require("../../images/timegreen.png")} />:
-        status === "passive" ?
-          <Image style={styles.activenessIcon} source={require("../../images/timeyellow.png")} /> :
-          <Image style={styles.activenessIcon} source={require("../../images/timered.png")} />;
-
-
-    const HistoryTrigger = () => {
+export default class DeviceItem extends PureComponent {
+    HistoryTrigger = (showHistory) => {
         return <TouchableOpacity style={styles.historyTrigger} onPress={showHistory}>
                     <Image style={styles.triggerImage} source={require('../../images/pin-mini.png')} />
                     <Text style={styles.triggerText}>History</Text>
                 </TouchableOpacity>
-    };
+    }
 
-    return (
-            <TouchableOpacity style={styles.deviceItem} onPress={changeMap}>
+    render(){
+        const {item, changeMap , openTrigger, changeTrigger, showHistory, active} = this.props
+        const {nm, detail, id} = item;
 
-                <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }>
-                    <Text style={styles[`deviceName${status}`]}>
-                        {nm}
-                    </Text>
-                    <View style={styles.deviceMainInfoDescription}>
-                        <Text style={styles.timeAgoWrap}>
-                          {time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}
-                        </Text>
-                        <DeviceStatuses detail={detail}/>
-                    </View>
-                </View>
+        const status = detail ? getDeviceStatus(detail) : "";
+        const time = status === "active" ?
+          <Image style={styles.activenessIcon} source={require("../../images/timegreen.png")} />:
+          status === "passive" ?
+            <Image style={styles.activenessIcon} source={require("../../images/timeyellow.png")} /> :
+        <Image style={styles.activenessIcon} source={require("../../images/timered.png")} />;
 
+        return (
+          <TouchableOpacity style={styles.deviceItem} onPress={changeMap}>
 
-                <Collapsible collapsed={openTrigger !== id}>
-                    {HistoryTrigger()}
-                    <Collapsible collapsed={!showHistory}>
-                       <HistoryBlock showHistory={showHistory} id={id}/>
-                    </Collapsible>
-                </Collapsible>
+              <TouchableOpacity style={styles.triggerMore}
+                                onPress={changeTrigger}>
+                  <Image style={styles.batteryIcon}
+                         source={require('../../images/more.png')}/>
+              </TouchableOpacity>
 
-                <TouchableOpacity style={styles.triggerMore}
-                                  onPress={changeTrigger}>
-                    <Image style={styles.batteryIcon}
-                           source={require('../../images/more.png')}/>
-                </TouchableOpacity>
+              <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }>
+                  <Text style={styles[`deviceName${status}`]}>
+                    {nm}
+                  </Text>
+                  <View style={styles.deviceMainInfoDescription}>
+                      <Text style={styles.timeAgoWrap}>
+                        {time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}
+                      </Text>
+                      <DeviceStatuses detail={detail}/>
+                  </View>
+              </View>
 
-            </TouchableOpacity>
+              <Collapsible collapsed={openTrigger !== id}>
+                {this.HistoryTrigger(showHistory)}
+                  <Collapsible collapsed={!showHistory}>
+                      <HistoryBlock showHistory={showHistory} id={id}/>
+                  </Collapsible>
+              </Collapsible>
 
-    );
+          </TouchableOpacity>
+
+        );
+    }
 };
 
 DeviceItem.propTypes = {
@@ -189,5 +190,3 @@ DeviceItem.propTypes = {
     changeTrigger : PropTypes.func,
     showHistory : PropTypes.func
 };
-
-export default DeviceItem;

@@ -82,6 +82,13 @@ const MyMapComponent = compose(
       : { latitude: -34.397, longitude: 150.644 };
     center = { ...center, latitudeDelta: 0.015, longitudeDelta: 0.0121 }
 
+    console.log('props.geoJSON  ', props.geoJSON );
+    if (!props.geoJSON && map ) {
+        map.animateToRegion(
+            center,
+        )
+    }
+
     let zoom = !props.zoomUpdated ? 15 : props.zoom;
 
     let mrks = props.markers.map((item) => {
@@ -163,10 +170,12 @@ const MyMapComponent = compose(
 
         center = getMapCenter(props.coordinates);
 
-        map.fitToCoordinates(
-          props.geoJSON,
-          {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: false}
-        )
+        if ( props.geoJSON ) {
+          map.fitToCoordinates(
+            props.geoJSON,
+            {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: false}
+          )
+        }
       }
 
     let polygons = props.polygons ? props.polygons.map((item) => {
@@ -189,10 +198,10 @@ const MyMapComponent = compose(
     return  <MapView
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
-                region={center}
+                // region={ !props.geoJSON ? center : null}
                 ref={ ref => map = ref}
                 // defaultZoom={4}
-                // zoom={zoom}
+                zoom={zoom}
                 zoomEnabled={true}
                 fitToElements={true}
                 mapType={props.mapType}
