@@ -158,7 +158,7 @@ const MyMapComponent = compose(
           )
         }
       } else {
-        if (map ) {
+        if (props.mapReady) {
           map.animateToRegion(
             center,
           )
@@ -194,6 +194,7 @@ const MyMapComponent = compose(
                 mapType={props.mapType}
                 onZoomChanged={()=>props.zoomChanged(this.map.getZoom())}
                 onPress={props.onPressHandler}
+                onLayout={props.onMapLayout}
             >
                 {mrks}
 
@@ -253,6 +254,7 @@ class MapComponent extends PureComponent {
             zoomUpdated : true,
             loaded : false,
             changeMapSettings : false,
+            mapReady: false
         }
     }
     changePosition(pos, id){
@@ -285,6 +287,11 @@ class MapComponent extends PureComponent {
             openId : null,
         })
     }
+
+    onMapLayout = () => {
+      this.setState({mapReady: true})
+    }
+
     componentWillReceiveProps(nextProps){
         if(nextProps.items.length > 0 && !this.state.loaded){
             let item = nextProps.items[0];
@@ -319,6 +326,8 @@ class MapComponent extends PureComponent {
                                          polygonFinish={(coordinates) => {
                                             this.props.savePolygon(coordinates)
                                          }}
+                                         mapReady={this.state.mapReady}
+                                         onMapLayout={this.onMapLayout}
                                          polygons={this.props.polygons}
                                          edit={this.props.edit}
                                          activeItemId={this.props.activeItemId}

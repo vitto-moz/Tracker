@@ -214,29 +214,28 @@ class DeviceListPage extends Component {
                         logout={() => this.logout()}
                 />
 
-                {
-                  !this.getActiveItems()[28]
-                    ? <View style={[styles.loaderWrap]}>
-                        {/*<ActivityIndicator size="large" color="grey" />*/}
-                        <Text style={styles.loadingText}>Loading...</Text>
-                    </View>
-                    : <MapComponent
-                      edit={this.state.edit}
-                      makeActive={this.makeActive.bind(this)}
-                      polygons={this.state.polygons}
-                      savePolygon={(polygon) => this.addPolygon(polygon)}
-                      finishDraw={() => this.finishDraw()}
-                      drawing={this.state.drawing}
-                      activeItemId={this.state.activeItemId}
-                      coordinates={this.props.devices.coordinates}
-                      geoJSON={this.props.devices.geoJSON}
-                      items={this.getActiveItems()}
-                      ref={map => this.map = map}
-                      mapType={this.state.mapType}
-                      finishEdit={this.finishEdit.bind(this)}
-                    />
-
-                }
+              {
+                !this.getActiveItems()[28]
+                  ? <View style={[styles.loaderWrap]}>
+                    {/*<ActivityIndicator size="large" color="grey" />*/}
+                      <Text style={styles.loadingText}>Loading...</Text>
+                  </View>
+                  : <MapComponent
+                    edit={this.state.edit}
+                    makeActive={this.makeActive.bind(this)}
+                    polygons={this.state.polygons}
+                    savePolygon={(polygon) => this.addPolygon(polygon)}
+                    finishDraw={() => this.finishDraw()}
+                    drawing={this.state.drawing}
+                    activeItemId={this.state.activeItemId}
+                    coordinates={this.props.devices.coordinates}
+                    geoJSON={this.props.devices.geoJSON}
+                    items={this.getActiveItems()}
+                    ref={map => this.map = map}
+                    mapType={this.state.mapType}
+                    finishEdit={this.finishEdit.bind(this)}
+                  />
+              }
 
                 <DeviceList
                     changeMapDirection={(id) => this.changeMapDirection(id)}
