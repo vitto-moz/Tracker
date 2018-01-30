@@ -50,22 +50,23 @@ class DeviceListPage extends Component {
               }
             }, 500)
         })
-        this.setOnBackHandler()
+        BackHandler.addEventListener('hardwareBackPress', this.onBackHandler);
     }
 
-    setOnBackHandler(){
-      BackHandler.addEventListener('hardwareBackPress', () => {
-        if (this.state.showList) {
-          this.setState({showList: false})
-          return true;
-        } else {
-          this.props.dispatch({type: 'RESET'});
-          AsyncStorage.removeItem('token', () => Actions.login());
-          return false;
-        }
-      });
+    componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.onBackHandler);
     }
 
+    onBackHandler = () => {
+      if (this.state.showList) {
+        this.setState({showList: false})
+        return true;
+      } else {
+        this.props.dispatch({type: 'RESET'});
+        AsyncStorage.removeItem('token', () => Actions.login());
+        return false;
+      }
+    }
 
     getDetailDeviceInfo(devices) {
         for (let i = 0; i < devices.length; i++) {

@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     zIndex: 15,
-    top: 300,
+    top: '45%',
   },
   loadingText: {
     fontSize: 25

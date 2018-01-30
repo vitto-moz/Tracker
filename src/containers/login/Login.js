@@ -7,6 +7,7 @@ import { login } from '../../actions/userActions';
 import { Actions } from "react-native-router-flux";
 import { AsyncStorage } from "react-native"
 import { Keyboard } from "react-native"
+import { BackHandler } from "react-native"
 
 class Login extends Component {
     constructor(props) {
@@ -35,6 +36,7 @@ class Login extends Component {
       AsyncStorage.getItem('token', ( err, token ) => {
         if(token) Actions.devices()
       }).catch(err => console.log('err ', err))
+      BackHandler.addEventListener('hardwareBackPress', BackHandler.exitApp);
     }
 
     handleInputChange(value, inputName) {
@@ -47,14 +49,11 @@ class Login extends Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.user.user){
-            Keyboard.dismiss()
-            if(this.state.rememberMe){
-                AsyncStorage.setItem('token', nextProps.user.ssid, () => {
-                    Actions.devices();
-                    this.setInitialState()
-                })
-                  .catch(err => console.log('err ', err))
-            } else Actions.devices()
+          Keyboard.dismiss()
+          AsyncStorage.setItem('token', nextProps.user.ssid, () => {
+            if(!this.state.rememberMe)this.setInitialState()
+              Actions.devices();
+          }).catch(err => console.log('err ', err))
         }
         if(nextProps.user.error){
             this.setState({
