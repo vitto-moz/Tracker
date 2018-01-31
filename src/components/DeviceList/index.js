@@ -24,8 +24,9 @@ class DeviceList extends PureComponent {
         return <FlatList
           data={this.props.items}
           initialNumToRender={6}
+          removeClippedSubviews={false}
           keyExtractor={item => item.id}
-          extraData={this.state}
+          extraData={this.state.openTrigger}
           renderItem={({item}) => {
             return <DeviceItem item={item}
                                changeMap={ ()=> this.props.changeMapDirection(item.id) }

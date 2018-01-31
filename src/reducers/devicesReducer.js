@@ -6,7 +6,8 @@ function initializeState() {
       devices : [],
       error : null,
       geoJSON : null,
-      coordinates : null
+      coordinates : null,
+      lastResponse : false
     };
 
     return Object.assign({}, initObj);
@@ -98,6 +99,13 @@ export default function devices(state = initializeState(), action = {}) {
             return {
                 ...state,
                 type : action.type
+            }
+        }
+        case DEVICE_ACTIONS.LAST_DEVICE_RESPONSE : {
+            console.log('last ');
+            return {
+                ...state,
+                lastResponse : true
             }
         }
         default : {

@@ -17,6 +17,7 @@ export const  DEVICE_ACTIONS = {
     CREATE_DEVICE_GEO_REQUEST: 'CREATE_DEVICE_GEO_REQUEST',
     CREATE_DEVICE_GEO_SUCCESS: 'CREATE_DEVICE_GEO_SUCCESS',
     CREATE_DEVICE_GEO_FAILURE: 'CREATE_DEVICE_GEO_FAILURE',
+    LAST_DEVICE_RESPONSE: 'LAST_DEVICE_RESPONSE',
 };
 
 
@@ -30,7 +31,7 @@ export function getDeviceHistory(ssid, id, value){
 
     };
     let today = moment().unix();
-    let dataArr = value.split(' ');
+    let dataArr = value && value.split(' ');
     let search_date = moment().subtract(dataArr[0], dataArr[1] ).unix();
 
     let searchQuery = {
@@ -55,6 +56,12 @@ export function getDeviceHistory(ssid, id, value){
 function getDeviceHistoryRequest() {
     return {
         type : DEVICE_ACTIONS.GET_DEVICE_HISTORY_REQUEST
+    }
+}
+
+function lastDeviceResponse() {
+    return {
+        type : DEVICE_ACTIONS.LAST_DEVICE_RESPONSE
     }
 }
 
@@ -116,22 +123,20 @@ function getDeviceHistoryFailure(error) {
     }
 }
 
-export function getDevice(ssid, id) {
-
+export function getDevice(ssid, id, last) {
     const config = {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
         }
-
     };
     return callApi(
         `ajax.html?svc=core/search_item&params=${JSON.stringify({"itemId":id,
             "flags":0})}&ssid=${ssid}`,
         config,
         getDeviceRequest(),
-        getDeviceSuccess,
-        getDeviceFailure,
+        getDeviceSuccess.bind(null, last),
+        getDeviceFailure.bind(null, last),
     )
 }
 export function getDevices(ssid) {
@@ -201,22 +206,23 @@ function getDeviceRequest() {
 }
 
 
-function getDeviceSuccess(response) {
+function getDeviceSuccess(last, response) {
     if(response.error){
-
-        return getDeviceFailure({message: "wrong credentials"});
+        return getDeviceFailure(last, {message: "wrong credentials"});
     }
-    return {
-        type : DEVICE_ACTIONS.GET_DEVICE_SUCCESS,
-        payload : response
+    return (dispatch) => {
+        last && dispatch(lastDeviceResponse())
+        dispatch({ type : DEVICE_ACTIONS.GET_DEVICE_SUCCESS, payload : response })
     }
 }
 
-function getDeviceFailure(error) {
-    return {
-        type : DEVICE_ACTIONS.GET_DEVICE_FAILURE,
-        error : error
+function getDeviceFailure(last, error) {
+    return (dispatch) => {
+        console.log('last ', last);
+        last && dispatch(lastDeviceResponse())
+        dispatch({ type : DEVICE_ACTIONS.GET_DEVICE_FAILURE, error : error })
     }
+
 }
 
 export function getDeviceGeoInfo(id) {

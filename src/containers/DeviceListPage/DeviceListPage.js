@@ -70,7 +70,13 @@ class DeviceListPage extends Component {
 
     getDetailDeviceInfo(devices) {
         for (let i = 0; i < devices.length; i++) {
-            this.props.dispatch(getDevice(this.state.ssid, devices[i].id))
+            this.props.dispatch(
+                getDevice(
+                    this.state.ssid,
+                    devices[i].id,
+                    devices.length - 1 === i
+                )
+            )
         }
     }
 
@@ -227,39 +233,42 @@ class DeviceListPage extends Component {
                 <Header toggleList={() => this.toggleList()}
                         logout={() => this.logout()}
                 />
-
-              {
-                !this.getActiveItems()[28]
+              {!this.props.devices.lastResponse
                   ? <View style={[styles.loaderWrap]}>
                     {/*<ActivityIndicator size="large" color="grey" />*/}
                       <Text style={styles.loadingText}>Loading...</Text>
                   </View>
-                  : <MapComponent
-                    edit={this.state.edit}
-                    makeActive={this.makeActive.bind(this)}
-                    polygons={this.state.polygons}
-                    savePolygon={(polygon) => this.addPolygon(polygon)}
-                    finishDraw={() => this.finishDraw()}
-                    drawing={this.state.drawing}
-                    activeItemId={this.state.activeItemId}
-                    coordinates={this.props.devices.coordinates}
-                    geoJSON={this.props.devices.geoJSON}
-                    items={this.getActiveItems()}
-                    ref={map => this.map = map}
-                    mapType={this.state.mapType}
-                    finishEdit={this.finishEdit.bind(this)}
-                  />
+                  : [
+                      <MapComponent
+                        key="1"
+                        edit={this.state.edit}
+                        makeActive={this.makeActive.bind(this)}
+                        polygons={this.state.polygons}
+                        savePolygon={(polygon) => this.addPolygon(polygon)}
+                        finishDraw={() => this.finishDraw()}
+                        drawing={this.state.drawing}
+                        activeItemId={this.state.activeItemId}
+                        coordinates={this.props.devices.coordinates}
+                        geoJSON={this.props.devices.geoJSON}
+                        items={this.getActiveItems()}
+                        ref={map => this.map = map}
+                        mapType={this.state.mapType}
+                        finishEdit={this.finishEdit.bind(this)}
+                      />,
+                      <DeviceList
+                          key="2"
+                          changeMapDirection={(id) => this.changeMapDirection(id)}
+                          loaded={this.props.devices.loaded}
+                          items={this.props.devices.items}
+                          showList={this.state.showList}
+                          activeItemId={this.state.activeItemId}
+                          renderToHardwareTextureAndroid={this.state.showList}
+                          showHistory={(id, value) => this.showItemHistory(id, value)
+                          }/>
+                    ]
               }
 
-                <DeviceList
-                    changeMapDirection={(id) => this.changeMapDirection(id)}
-                    loaded={this.props.devices.loaded}
-                    items={this.props.devices.items}
-                    showList={this.state.showList}
-                    activeItemId={this.state.activeItemId}
-                    renderToHardwareTextureAndroid={this.state.showList}
-                    showHistory={(id, value) => this.showItemHistory(id, value)
-                }/>
+
 
                 <Bottom showModal={() => this.showModal()} showDrawModal={() => this.showDrawModal()}/>
 
