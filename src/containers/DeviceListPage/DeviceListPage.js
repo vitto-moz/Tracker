@@ -257,6 +257,7 @@ class DeviceListPage extends Component {
                     items={this.props.devices.items}
                     showList={this.state.showList}
                     activeItemId={this.state.activeItemId}
+                    renderToHardwareTextureAndroid={this.state.showList}
                     showHistory={(id, value) => this.showItemHistory(id, value)
                 }/>
 

@@ -16,7 +16,7 @@ const initialState = {};
 export default function configureStore() {
     let store;
 
-    if (module.hot) {
+    if (module.hot && __DEV__) {
         store = createStore(
             rootReducer,
             initialState,

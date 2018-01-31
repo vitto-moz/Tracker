@@ -23,7 +23,7 @@ class DeviceList extends PureComponent {
       if(this.props.loaded){
         return <FlatList
           data={this.props.items}
-          removeClippedSubviews={true}
+          initialNumToRender={6}
           keyExtractor={item => item.id}
           extraData={this.state}
           renderItem={({item}) => {
