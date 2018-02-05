@@ -111,8 +111,10 @@ class DeviceListPage extends Component {
     changeMapDirection(id) {
         this.setState({activeItemId: id});
         let item = this.props.devices.items.find((item) => item.id === id);
-        let pos = {latitude: item.detail.pos.y, longitude: item.detail.pos.x};
-        this.map.changePosition(pos, id);
+        if (item.detail.pos.y) {
+            let pos = {latitude: item.detail.pos.y, longitude: item.detail.pos.x};
+            this.map.changePosition(pos, id);
+        }
     }
 
     changeMapType(type) {

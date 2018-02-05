@@ -32,6 +32,7 @@ export default function devices(state = initializeState(), action = {}) {
             return {
                 ...state,
                 type: action.type,
+                geoJSON : null,
                 history_load : false
             }
         }
@@ -102,7 +103,6 @@ export default function devices(state = initializeState(), action = {}) {
             }
         }
         case DEVICE_ACTIONS.LAST_DEVICE_RESPONSE : {
-            console.log('last ');
             return {
                 ...state,
                 lastResponse : true

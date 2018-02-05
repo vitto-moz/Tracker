@@ -218,7 +218,6 @@ function getDeviceSuccess(last, response) {
 
 function getDeviceFailure(last, error) {
     return (dispatch) => {
-        console.log('last ', last);
         last && dispatch(lastDeviceResponse())
         dispatch({ type : DEVICE_ACTIONS.GET_DEVICE_FAILURE, error : error })
     }
