@@ -12,17 +12,17 @@ import Collapsible from 'react-native-collapsible';
  */
 
 const images = {
-    green1: require("../../images/green1.png"),
-    green2: require("../../images/green2.png"),
-    green3: require("../../images/green3.png"),
-    gray1: require("../../images/gray1.png"),
-    gray2: require("../../images/gray2.png"),
-    gray3: require("../../images/gray3.png"),
-    signal_1: require("../../images/signal_1.png"),
-    signal_2: require("../../images/signal_2.png"),
-    signal_3: require("../../images/signal_3.png"),
-    signal_4: require("../../images/signal_4.png"),
-    signal_5: require("../../images/signal_5.png"),
+    green1: require("../../../dist/resized/green1.png"),
+    green2: require("../../../dist/resized/green2.png"),
+    green3: require("../../../dist/resized/green3.png"),
+    gray1: require("../../../dist/resized/gray1.png"),
+    gray2: require("../../../dist/resized/gray2.png"),
+    gray3: require("../../../dist/resized/gray3.png"),
+    signal_1: require("../../../dist/resized/signal_1.png"),
+    signal_2: require("../../../dist/resized/signal_2.png"),
+    signal_3: require("../../../dist/resized/signal_3.png"),
+    signal_4: require("../../../dist/resized/signal_4.png"),
+    signal_5: require("../../../dist/resized/signal_5.png"),
 }
 
 function getDeviceStatus(detail) {
@@ -40,7 +40,7 @@ function getDeviceBattery(detail) {
         let filename = `${getDeviceStatus(detail) === "active" ? "green" : "gray"}${parseInt(level)}`;
         return (
           <View style={styles.batteryLevelWrap}>
-              {/*<Image style={styles.batteryIcon} source={images[filename]} />*/}
+              <Image style={styles.batteryIcon} source={images[filename]} />
               <Text style={styles.batteryLevel}>{detail.pos.p.battery_level}%</Text>
           </View>
         )
@@ -68,26 +68,26 @@ function getGSMIcon(detail) {
             let gsmSignal = detail['pos']['p']['gsm_csq'];
             if (detail['hw'] === 646) {
                 let level = getLevel(gsmSignal, [10, 14, 17, 20, 999]);
-                // return <Image style={styles.batteryIcon} source={images[`signal_${level}`]} />
+                return <Image style={styles.batteryIcon} source={images[`signal_${level}`]} />
             } else {
                 let level = getLevel(gsmSignal, [6, 9, 12, 20, 999]);
-                // return <Image style={styles.batteryIcon} source={images[`signal_${level}`]} />
+                return <Image style={styles.batteryIcon} source={images[`signal_${level}`]} />
             }
         }
-        // return <Image style={styles.batteryIcon} source={require("../../images/signal_offline.png")} />
+        return <Image style={styles.batteryIcon} source={require("../../../dist/resized/signal_offline.png")} />
     }
 }
 
 function getGPSIcon(detail) {
     let hardware = detail['hw'];
     let isMinifinder = hardware === 646 || hardware === 2798;
-    if (isMinifinder) {
+    if (detail['pos']['p'] && isMinifinder) {
         let status = getDeviceStatus(detail);
         let gpsSignal = detail['pos']['p']['sats_in_view'];
         if (status !== "offline" || gpsSignal < 2) {
-            // return <Image style={styles.batteryIcon} source={require("../../images/satellite.png")} />
+            return <Image style={styles.batteryIcon} source={require("../../../dist/resized/satellite.png")} />
         } else {
-          // return <Image style={styles.batteryIcon} source={require("../../images/satellite_offline.png")} />
+          return <Image style={styles.batteryIcon} source={require("../../../dist/resized/satellite_offline.png")} />
         }
     }
     return null
@@ -96,15 +96,15 @@ function getGPSIcon(detail) {
 function getSpeedIcon(detail) {
     let status = getDeviceStatus(detail);
     let speed = detail['pos']['s'];
-    // if (status !== "offline") {
-    //     return speed > 0 ?
-    //       <Image style={styles.batteryIcon} source={require("../../images/arrow-right.png")} /> :
-    //       <Image style={styles.batteryIcon} source={require("../../images/arrow-minus.png")} />;
-    // } else {
-    //     return speed > 0 ?
-    //       <Image style={styles.batteryIcon} source={require("../../images/arrow-right-gray.png")} /> :
-    //       <Image style={styles.batteryIcon} source={require("../../images/arrow-minus-gray.png")} />;
-    // }
+    if (status !== "offline") {
+        return speed > 0 ?
+          <Image style={styles.batteryIcon} source={require("../../../dist/resized/arrow-right.png")} /> :
+          <Image style={styles.batteryIcon} source={require("../../../dist/resized/arrow-minus.png")} />;
+    } else {
+        return speed > 0 ?
+          <Image style={styles.batteryIcon} source={require("../../../dist/resized/arrow-right-gray.png")} /> :
+          <Image style={styles.batteryIcon} source={require("../../../dist/resized/arrow-minus-gray.png")} />;
+    }
 }
 
 const DeviceStatuses = ({detail}) => {
@@ -131,7 +131,7 @@ DeviceStatuses.propTypes = {
 export default class DeviceItem extends PureComponent {
     HistoryTrigger = (showHistory) => {
         return <TouchableOpacity style={styles.historyTrigger} onPress={showHistory}>
-                    {/*<Image style={styles.triggerImage} source={require('../../images/pin-mini.png')} />*/}
+                    <Image style={styles.triggerImage} source={require('../../../dist/resized/pin-mini.png')} />
                     <Text style={styles.triggerText}>History</Text>
                 </TouchableOpacity>
     }
@@ -141,11 +141,11 @@ export default class DeviceItem extends PureComponent {
         const {nm, detail, id} = item;
 
         const status = detail ? getDeviceStatus(detail) : "";
-        // const time = status === "active" ?
-        //   <Image style={styles.activenessIcon} source={require("../../images/timegreen.png")} />:
-        //   status === "passive" ?
-        //     <Image style={styles.activenessIcon} source={require("../../images/timeyellow.png")} /> :
-        // <Image style={styles.activenessIcon} source={require("../../images/timered.png")} />;
+        const time = status === "active" ?
+          <Image style={styles.activenessIcon} source={require("../../../dist/resized/timegreen.png")} />:
+          status === "passive" ?
+            <Image style={styles.activenessIcon} source={require("../../../dist/resized/timeyellow.png")} /> :
+        <Image style={styles.activenessIcon} source={require("../../../dist/resized/timered.png")} />;
 
         return (
           <TouchableOpacity style={styles.deviceItem} onPress={changeMap}>
@@ -153,7 +153,7 @@ export default class DeviceItem extends PureComponent {
               <TouchableOpacity style={styles.triggerMore}
                                 onPress={changeTrigger}>
                   <Image style={styles.batteryIcon}
-                         source={require('../../images/more.png')}/>
+                         source={require('../../../dist/resized/more.png')}/>
               </TouchableOpacity>
 
               <View style={active ? styles.deviceMainInfo : [styles.deviceMainInfo, styles.deviceMainInfoActive] }>
@@ -162,7 +162,7 @@ export default class DeviceItem extends PureComponent {
                   </Text>
                   <View style={styles.deviceMainInfoDescription}>
                       <Text style={styles.timeAgoWrap}>
-                        {/*{time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}*/}
+                        {time} {detail ? <Text>{moment(detail.pos.t * 1000).fromNow()}</Text> : null}
                       </Text>
                       <DeviceStatuses detail={detail}/>
                   </View>
